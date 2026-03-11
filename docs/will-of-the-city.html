@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Will of the City | YusNote</title>
-    <script type="module" src="../src/pages/doc.ts"></script>
+    <title>📡 指令 | YusNote</title>
+    <script type="module" src="../src/pages/will-of-the-city.ts"></script>
   </head>
   <body>
     <div class="site-shell">
       <header class="site-header">
         <div class="brand-lockup">
-          <span class="brand-mark">Showcase</span>
-          <span class="brand-title">Will of the City</span>
-          <span class="brand-subtitle">把原展示页收敛成一张更适合公开阅读的说明卡。</span>
+          <span class="brand-mark">Instruction</span>
+          <span class="brand-title">指令</span>
+          <span class="brand-subtitle">Sidebar Broadcast Console</span>
         </div>
         <div class="nav-row">
           <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
@@ -23,27 +23,45 @@
       </header>
 
       <main class="docs-layout page-main">
-        <article class="article">
-          <h2>项目氛围</h2>
-          <p>这页保留的是项目气质，而不是原始采集页面。它强调三件事：像仪式一样的文案呈现、像档案一样的视觉排版，以及像状态宣告一样的交互节奏。</p>
-          <h3>设计方向</h3>
-          <ul>
-            <li>黑底、小像素、低饱和高对比的单点强调。</li>
-            <li>主文案始终是中心，视觉资源只服务于氛围，不盖过文本。</li>
-            <li>适合做成一个长期更新的小型展示，而不是一次性实验页。</li>
-          </ul>
-          <h3>如果继续扩展</h3>
-          <ul>
-            <li>加入每日条目归档与版本切换。</li>
-            <li>把文案和展示素材拆到可维护的数据文件。</li>
-            <li>把当前展示页继续养成一个可持续更新的小型微站。</li>
-          </ul>
-        </article>
+        <section class="city-layout">
+          <aside class="surface city-sidebar" id="citySidebar">
+            <div class="city-sidebar__top">
+              <img class="city-sidebar__icon" src="../assets/docs/instruction.png" alt="指令图标" />
+              <div>
+                <span class="eyebrow">City Signal</span>
+                <h1 class="city-sidebar__title">📡 指令</h1>
+              </div>
+              <button class="ghost-button city-sidebar__toggle" type="button" id="citySidebarToggle">展开控制栏</button>
+            </div>
+            <div class="city-sidebar__body" id="citySidebarBody">
+              <p class="card-copy">按下按钮，生成一条属于夜间城市、同时带着食指味道的怪诞指令。</p>
+              <div class="chip-row">
+                <span class="meta-chip" id="cityBroadcastType">夜间指令</span>
+                <span class="meta-chip" id="cityBroadcastCode">Signal 00</span>
+              </div>
+              <div class="stack">
+                <button class="button" type="button" id="cityGenerateButton">生成新指令</button>
+                <button class="ghost-button" type="button" id="cityCopyButton">复制文本</button>
+              </div>
+              <div class="label">🗂 归档标签</div>
+              <div class="chip-row" id="cityTags"></div>
+              <div class="label">📎 回声注记</div>
+              <p class="card-copy" id="cityFooter"></p>
+            </div>
+          </aside>
+
+          <article class="article city-console">
+            <div class="city-console__display">
+              <p class="city-console__line" id="cityLinePrimary"></p>
+              <p class="city-console__line city-console__line--soft" id="cityLineSecondary"></p>
+            </div>
+          </article>
+        </section>
       </main>
 
       <footer class="site-footer">
-        <span>Will of the City</span>
-        <span>© <span data-year></span> 保留作品气质与继续更新的余地</span>
+        <span>指令</span>
+        <span>&copy; <span data-year></span> 冷漠、怪诞且不合时宜的夜间回执</span>
       </footer>
     </div>
   </body>

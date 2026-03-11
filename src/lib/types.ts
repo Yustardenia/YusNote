@@ -24,12 +24,17 @@ export type IconId =
   | "divination"
   | "game"
   | "github"
+  | "bilibili"
+  | "youtube"
   | "video"
   | "star"
   | "library"
   | "controller"
   | "audio"
   | "showcase"
+  | "instruction"
+  | "archive"
+  | "alert"
   | "heart"
   | "flower"
   | "mail"
@@ -104,6 +109,7 @@ export interface FocusState {
 
 export interface SiteProfile {
   name: string;
+  headline: string;
   subtitle: string;
   intro: string;
   status: string;

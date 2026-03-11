@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YusNote | 夜色收藏柜</title>
+    <title>🌙 YusNote | Night Shelf</title>
     <script type="module" src="./src/pages/home.ts"></script>
   </head>
   <body>
@@ -12,7 +12,7 @@
         <div class="brand-lockup">
           <span class="brand-mark">Personal Site</span>
           <span class="brand-title">YusNote</span>
-          <span class="brand-subtitle" id="profileSubtitle"></span>
+          <span class="brand-subtitle">Night Shelf</span>
         </div>
         <div class="nav-row">
           <a class="nav-chip" data-nav="home" href="./index.html">首页</a>
@@ -25,13 +25,13 @@
       <main class="page-main">
         <section class="hero-grid">
           <article class="panel hero-card">
-            <span class="eyebrow">Night Shelf</span>
-            <h1 class="hero-title">把收藏、灵感和常用页面都放回一个更像“我”的网站里。</h1>
-            <p class="hero-note" id="profileIntro"></p>
-            <div class="status-strip" id="statusPills"></div>
+            <span class="eyebrow" id="profileSubtitle"></span>
+            <h1 class="hero-title" id="heroTitle"></h1>
+            <p class="hero-note" id="profileIntro" hidden></p>
+            <div class="status-strip" id="statusPills" hidden></div>
             <div class="split-actions hero-actions">
-              <a class="button" href="./docs/will-of-the-city.html">先去看展示页</a>
-              <a class="ghost-button" href="./tools/creative.html">打开灵感页</a>
+              <a class="button" href="./docs/will-of-the-city.html">📡 进入指令页</a>
+              <a class="ghost-button" href="./tools/creative.html">🎨 打开灵感页</a>
             </div>
             <form class="search-shell" id="searchForm">
               <select id="engineSelect" aria-label="搜索引擎">
@@ -50,16 +50,18 @@
               <img id="profileAvatar" alt="" />
             </div>
             <div class="portrait-card__meta">
-              <span class="eyebrow eyebrow--small">Current Status</span>
-              <p class="portrait-card__headline" id="profileStatus"></p>
-              <p class="portrait-card__quote">当前氛围：<span id="profileMood"></span></p>
+              <div class="portrait-copy" id="portraitCopy" hidden>
+                <span class="eyebrow eyebrow--small">Current Status</span>
+                <p class="portrait-card__headline" id="profileStatus"></p>
+                <p class="portrait-card__quote" id="profileMoodRow">当前氛围：<span id="profileMood"></span></p>
+              </div>
               <div class="grid-2">
                 <section class="metric-card">
-                  <div class="metric-label">今日专注</div>
+                  <div class="metric-label">⏱ 今日专注</div>
                   <div class="metric-value" id="focusCount">0</div>
                 </section>
                 <section class="metric-card">
-                  <div class="metric-label">累计时长</div>
+                  <div class="metric-label">🕰 累计时长</div>
                   <div class="metric-value" id="focusMinutes">0 分钟</div>
                 </section>
               </div>
@@ -69,22 +71,19 @@
 
         <section class="grid-4">
           <article class="metric-card">
-            <div class="metric-label">待办数量</div>
+            <div class="metric-label">🗒️ 待办数量</div>
             <div class="metric-value" id="todoCount">0</div>
-            <p class="card-copy">今天还有几件想推进的小事，抬头就能看见。</p>
           </article>
           <article class="metric-card">
-            <div class="metric-label">今日日程</div>
+            <div class="metric-label">🗓️ 今日日程</div>
             <div class="metric-value" id="scheduleCount">0</div>
-            <p class="card-copy">把日程摆成温柔一点的节奏，不让事情一下子挤过来。</p>
           </article>
           <article class="metric-card">
-            <div class="metric-label">常驻链接</div>
+            <div class="metric-label">🔗 常驻链接</div>
             <div class="metric-value" id="quickLinkCount">0</div>
-            <p class="card-copy">站外入口仍然保留，只是换成更好看的方式摆出来。</p>
           </article>
           <article class="metric-card">
-            <div class="metric-label">倒计时</div>
+            <div class="metric-label">⏳ 倒计时</div>
             <div class="metric-value" id="countdownValue">-- : -- : --</div>
             <p class="card-copy" id="countdownTitle">正在读取目标中...</p>
           </article>
@@ -92,8 +91,7 @@
 
         <section class="section-head">
           <div>
-            <h2 class="section-title">收藏橱窗</h2>
-            <p class="section-copy">首页先放最能代表这间小站气质的入口，而不是一次把所有功能都铺开。</p>
+            <h2 class="section-title">🪟 收藏橱窗</h2>
           </div>
         </section>
         <section class="shelf-grid" id="collectionGrid"></section>
@@ -102,8 +100,7 @@
           <article class="surface">
             <div class="split-actions">
               <div>
-                <div class="label">常驻链接</div>
-                <p class="muted">把最常打开的地方放在这一页。</p>
+                <div class="label">🔗 常驻链接</div>
               </div>
               <button class="button" type="button" id="addQuickLinkButton">新增链接</button>
             </div>
@@ -113,36 +110,31 @@
           <article class="surface">
             <div class="split-actions">
               <div>
-                <div class="label">当前倒计时</div>
-                <p class="muted">想挂在首页的目标，就放在这里慢慢看它接近。</p>
+                <div class="label">⏳ 当前倒计时</div>
               </div>
               <button class="ghost-button" type="button" id="editCountdownButton">编辑倒计时</button>
             </div>
             <div class="metric-value" style="margin-top: 16px" id="countdownValueMobile">请看上面的时间牌</div>
-            <p class="card-copy">如果你更常用 Todo 或看板，也可以在对应页面一键同步过来。</p>
           </article>
 
           <article class="surface">
-            <div class="label">看板概览</div>
+            <div class="label">📋 看板概览</div>
             <div class="mini-list" style="margin-top: 16px">
               <div class="mini-item">
                 <div>
-                  <strong>Backlog</strong>
-                  <span class="muted">还没拆开的念头</span>
+                  <strong>📝 Backlog</strong>
                 </div>
                 <span class="pill" id="kanbanBacklogMini">0</span>
               </div>
               <div class="mini-item">
                 <div>
-                  <strong>Doing</strong>
-                  <span class="muted">正在推进的部分</span>
+                  <strong>⚙️ Doing</strong>
                 </div>
                 <span class="pill" id="kanbanDoingMini">0</span>
               </div>
               <div class="mini-item">
                 <div>
-                  <strong>Done</strong>
-                  <span class="muted">已经落下来的进度</span>
+                  <strong>✅ Done</strong>
                 </div>
                 <span class="pill" id="kanbanDoneMini">0</span>
               </div>
@@ -152,19 +144,18 @@
 
         <section class="grid-2">
           <article class="surface">
-            <div class="label">待办预览</div>
+            <div class="label">🗒️ 待办预览</div>
             <ul class="list-reset mini-list" id="todoPreview" style="margin-top: 16px"></ul>
           </article>
           <article class="surface">
-            <div class="label">今日安排</div>
+            <div class="label">🗓️ 今日安排</div>
             <ul class="list-reset mini-list" id="schedulePreview" style="margin-top: 16px"></ul>
           </article>
         </section>
 
         <section class="section-head">
           <div>
-            <h2 class="section-title">功能入口</h2>
-            <p class="section-copy">工具还在，只是退到站点的第二层，像房间里一排整齐的抽屉。</p>
+            <h2 class="section-title">🧰 功能入口</h2>
           </div>
           <a class="ghost-button" href="./tools/focus.html">打开专注页</a>
         </section>
@@ -172,8 +163,7 @@
 
         <section class="section-head">
           <div>
-            <h2 class="section-title">作品与手记</h2>
-            <p class="section-copy">把想长期保留的内容单独陈列出来，让它们可以慢一点被看见。</p>
+            <h2 class="section-title">📚 作品与手记</h2>
           </div>
           <a class="ghost-button" href="./docs/index.html">进入内容页</a>
         </section>
@@ -183,7 +173,7 @@
 
       <footer class="site-footer">
         <span>YusNote</span>
-        <span>© <span data-year></span> 收藏、灵感与一点夜色音乐</span>
+        <span>&copy; <span data-year></span> Night Shelf</span>
       </footer>
     </div>
   </body>

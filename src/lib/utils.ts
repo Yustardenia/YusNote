@@ -62,7 +62,8 @@ export function escapeHtml(value: string): string {
 export function guessQuickLinkIcon(url: string, label = ""): IconId {
   const lower = `${url} ${label}`.toLowerCase();
   if (lower.includes("github")) return "github";
-  if (lower.includes("bilibili") || lower.includes("youtube")) return "video";
+  if (lower.includes("bilibili")) return "bilibili";
+  if (lower.includes("youtube")) return "youtube";
   if (lower.includes("music") || lower.includes("spotify") || lower.includes("netease")) return "music";
   if (lower.includes("calendar")) return "calendar";
   if (lower.includes("game")) return "game";

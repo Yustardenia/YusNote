@@ -16,7 +16,7 @@ if (grid) {
           <div class="card-body">
             <span class="card-kicker">${card.kicker}</span>
             <div class="card-headline">
-              ${renderIcon(card.iconId)}
+              ${renderIcon(card.iconId, "card-lead-icon")}
               <h3 class="card-title">${card.title}</h3>
             </div>
             <p class="card-copy">${card.copy}</p>

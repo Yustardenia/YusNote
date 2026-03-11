@@ -33,14 +33,14 @@ const defaultQuickLinks: QuickLink[] = [
     id: uid("link"),
     label: "Bilibili",
     url: "https://www.bilibili.com",
-    iconId: "video",
+    iconId: "bilibili",
     accent: "sky"
   },
   {
     id: uid("link"),
     label: "YouTube",
     url: "https://www.youtube.com",
-    iconId: "video",
+    iconId: "youtube",
     accent: "rose"
   }
 ];
@@ -52,9 +52,7 @@ const defaultCountdown: CountdownState = {
 };
 
 const defaultKanban: KanbanBoard = {
-  backlog: [
-    { id: uid("task"), text: "整理今天最想推进的一件事", note: "", updatedAt: new Date().toISOString() }
-  ],
+  backlog: [{ id: uid("task"), text: "整理今天最想推进的一件事", note: "", updatedAt: new Date().toISOString() }],
   doing: [],
   done: []
 };
