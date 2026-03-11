@@ -1,9 +1,15 @@
+import type { IconId } from "./types";
+
 export function uid(prefix: string): string {
   return `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 export function todayIso(): string {
-  return new Date().toISOString().split("T")[0] ?? "";
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 export function formatDateTime(value?: string): string {
@@ -32,13 +38,13 @@ export function clamp(value: number, min: number, max: number): number {
 export function statusLabel(status: "planned" | "doing" | "done" | "skipped"): string {
   switch (status) {
     case "planned":
-      return "还没开始";
+      return "准备中";
     case "doing":
-      return "正在进行";
+      return "进行中";
     case "done":
-      return "已经完成";
+      return "已完成";
     case "skipped":
-      return "今天算了";
+      return "暂时搁置";
     default:
       return "未分类";
   }
@@ -51,4 +57,26 @@ export function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+export function guessQuickLinkIcon(url: string, label = ""): IconId {
+  const lower = `${url} ${label}`.toLowerCase();
+  if (lower.includes("github")) return "github";
+  if (lower.includes("bilibili") || lower.includes("youtube")) return "video";
+  if (lower.includes("music") || lower.includes("spotify") || lower.includes("netease")) return "music";
+  if (lower.includes("calendar")) return "calendar";
+  if (lower.includes("game")) return "game";
+  if (lower.includes("book") || lower.includes("read") || lower.includes("docs")) return "book";
+  if (lower.includes("mail")) return "mail";
+  return "link";
+}
+
+export function guessQuickLinkAccent(url: string, label = ""): string {
+  const lower = `${url} ${label}`.toLowerCase();
+  if (lower.includes("github")) return "night";
+  if (lower.includes("bilibili")) return "sky";
+  if (lower.includes("youtube")) return "rose";
+  if (lower.includes("music")) return "mint";
+  if (lower.includes("docs") || lower.includes("read")) return "gold";
+  return "berry";
 }

@@ -1,4 +1,5 @@
 import { initAppShell } from "../lib/base";
+import { renderIcon } from "../lib/icons";
 import {
   getCountdown,
   getFocusState,
@@ -10,8 +11,15 @@ import {
   saveQuickLinks
 } from "../lib/storage";
 import type { QuickLink } from "../lib/types";
+import {
+  collectionItems,
+  docCards,
+  showcaseItems,
+  siteProfile,
+  statusPills,
+  toolCards
+} from "../data/site";
 import { formatDateTime, formatDuration, statusLabel, todayIso, uid } from "../lib/utils";
-import { docCards, toolCards } from "../data/site";
 import "../styles/global.css";
 
 initAppShell("home");
@@ -23,6 +31,102 @@ const toolGrid = document.querySelector<HTMLElement>("#toolGrid");
 const docGrid = document.querySelector<HTMLElement>("#docGrid");
 const countdownValue = document.querySelector<HTMLElement>("#countdownValue");
 const countdownTitle = document.querySelector<HTMLElement>("#countdownTitle");
+const collectionGrid = document.querySelector<HTMLElement>("#collectionGrid");
+const showcaseGrid = document.querySelector<HTMLElement>("#showcaseGrid");
+const statusPillRow = document.querySelector<HTMLElement>("#statusPills");
+
+function renderStaticProfile(): void {
+  document.querySelector<HTMLElement>("#profileSubtitle")!.textContent = siteProfile.subtitle;
+  document.querySelector<HTMLElement>("#profileIntro")!.textContent = siteProfile.intro;
+  document.querySelector<HTMLElement>("#profileStatus")!.textContent = siteProfile.status;
+  document.querySelector<HTMLElement>("#profileMood")!.textContent = siteProfile.currentMood;
+  const avatar = document.querySelector<HTMLImageElement>("#profileAvatar");
+  if (avatar) {
+    avatar.src = siteProfile.avatarAsset;
+    avatar.alt = `${siteProfile.name} 角色立绘占位图`;
+  }
+
+  if (statusPillRow) {
+    statusPillRow.innerHTML = statusPills.map((item) => `<span class="status-chip">${item}</span>`).join("");
+  }
+}
+
+function cardMarkup(card: {
+  href: string;
+  kicker: string;
+  title: string;
+  copy: string;
+  footer: string;
+  iconId: QuickLink["iconId"];
+  coverAsset: string;
+  tags: string[];
+}): string {
+  return `
+    <a class="tool-card" href="${card.href}">
+      <div class="card-cover" style="background-image: url('${card.coverAsset}')"></div>
+      <div class="card-body">
+        <span class="card-kicker">${card.kicker}</span>
+        <div class="card-headline">
+          ${renderIcon(card.iconId)}
+          <h3 class="card-title">${card.title}</h3>
+        </div>
+        <p class="card-copy">${card.copy}</p>
+        <div class="card-tags">${card.tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}</div>
+        <span class="card-footer">${card.footer}</span>
+      </div>
+    </a>
+  `;
+}
+
+function renderCards(): void {
+  if (collectionGrid) {
+    collectionGrid.innerHTML = collectionItems
+      .map(
+        (item) => `
+          <a class="collection-card" href="${item.href}">
+            <div class="card-cover" style="background-image: url('${item.coverAsset}')"></div>
+            <div class="card-body">
+              <div class="card-headline">
+                ${renderIcon(item.iconId)}
+                <h3 class="card-title">${item.title}</h3>
+              </div>
+              <p class="card-copy">${item.description}</p>
+              <div class="card-tags">${item.tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}</div>
+            </div>
+          </a>
+        `
+      )
+      .join("");
+  }
+
+  if (showcaseGrid) {
+    showcaseGrid.innerHTML = showcaseItems
+      .map(
+        (item) => `
+          <a class="showcase-card" href="${item.href}">
+            <div class="card-cover" style="background-image: url('${item.coverAsset}')"></div>
+            <div class="card-body">
+              <div class="card-headline">
+                ${renderIcon(item.iconId)}
+                <h3 class="card-title">${item.title}</h3>
+              </div>
+              <p class="card-copy">${item.description}</p>
+              <span class="card-footer">${item.footer}</span>
+            </div>
+          </a>
+        `
+      )
+      .join("");
+  }
+
+  if (toolGrid) {
+    toolGrid.innerHTML = toolCards.map(cardMarkup).join("");
+  }
+
+  if (docGrid) {
+    docGrid.innerHTML = docCards.map(cardMarkup).join("");
+  }
+}
 
 function renderQuickLinks(): void {
   const links = getQuickLinks();
@@ -32,7 +136,7 @@ function renderQuickLinks(): void {
   quickLinksList.innerHTML = "";
 
   if (links.length === 0) {
-    quickLinksList.innerHTML = `<li class="empty-state">还没有快捷链接，先加三个最常用入口。</li>`;
+    quickLinksList.innerHTML = `<li class="empty-state">还没有收藏入口，先放几个你最常用的网站吧。</li>`;
     return;
   }
 
@@ -40,13 +144,18 @@ function renderQuickLinks(): void {
     const item = document.createElement("li");
     item.className = "mini-item";
     item.innerHTML = `
-      <div>
-        <strong>${link.icon} ${link.label}</strong>
-        <span class="muted">${link.url}</span>
+      <div class="quicklink-row">
+        <span class="quicklink-badge" data-accent="${link.accent}">
+          ${renderIcon(link.iconId, "quicklink-icon")}
+        </span>
+        <div>
+          <strong>${link.label}</strong>
+          <span class="muted">${link.url}</span>
+        </div>
       </div>
       <div class="split-actions">
         <a class="ghost-button" href="${link.url}" target="_blank" rel="noreferrer">打开</a>
-        <button class="ghost-button" type="button" data-remove-link="${link.id}">删除</button>
+        <button class="ghost-button" type="button" data-remove-link="${link.id}">移除</button>
       </div>
     `;
     quickLinksList.appendChild(item);
@@ -69,7 +178,7 @@ function renderTodoPreview(): void {
   todoPreview.innerHTML = "";
 
   if (todos.length === 0) {
-    todoPreview.innerHTML = `<li class="empty-state">今天没有未完成事项，首页已经清空。</li>`;
+    todoPreview.innerHTML = `<li class="empty-state">今天的待办已经清空，可以放心去逛别的页面了。</li>`;
     return;
   }
 
@@ -81,7 +190,7 @@ function renderTodoPreview(): void {
         <strong>${item.text}</strong>
         <span class="muted">${item.dueAt ? `截止 ${formatDateTime(item.dueAt)}` : "没有设置截止时间"}</span>
       </div>
-      <span class="pill">${item.dueAt ? "带时间" : "待办"}</span>
+      <span class="pill">${item.dueAt ? "有时限" : "慢慢来"}</span>
     `;
     todoPreview.appendChild(node);
   });
@@ -96,7 +205,7 @@ function renderSchedulePreview(): void {
   schedulePreview.innerHTML = "";
 
   if (schedule.length === 0) {
-    schedulePreview.innerHTML = `<li class="empty-state">今天没有安排，可以去时间页先建一条。</li>`;
+    schedulePreview.innerHTML = `<li class="empty-state">今天还没有排进日程的事情，页面会一直替你留着这个空位。</li>`;
     return;
   }
 
@@ -116,7 +225,6 @@ function renderSchedulePreview(): void {
 
 function renderKanbanPreview(): void {
   const board = getKanban();
-  document.querySelector("#kanbanBacklogCount")!.textContent = `${board.backlog.length}`;
   document.querySelector("#kanbanBacklogMini")!.textContent = `${board.backlog.length}`;
   document.querySelector("#kanbanDoingMini")!.textContent = `${board.doing.length}`;
   document.querySelector("#kanbanDoneMini")!.textContent = `${board.done.length}`;
@@ -126,38 +234,6 @@ function renderFocusPreview(): void {
   const state = getFocusState();
   document.querySelector("#focusCount")!.textContent = `${state.completedCount}`;
   document.querySelector("#focusMinutes")!.textContent = formatDuration(state.totalMinutes);
-}
-
-function renderCards(): void {
-  if (toolGrid) {
-    toolGrid.innerHTML = toolCards
-      .map(
-        (card) => `
-          <a class="tool-card" href="${card.href}">
-            <span class="card-kicker">${card.kicker}</span>
-            <h3 class="card-title">${card.title}</h3>
-            <p class="card-copy">${card.copy}</p>
-            <span class="card-footer">${card.footer}</span>
-          </a>
-        `
-      )
-      .join("");
-  }
-
-  if (docGrid) {
-    docGrid.innerHTML = docCards
-      .map(
-        (card) => `
-          <a class="doc-card" href="${card.href}">
-            <span class="card-kicker">${card.kicker}</span>
-            <h3 class="card-title">${card.title}</h3>
-            <p class="card-copy">${card.copy}</p>
-            <span class="card-footer">${card.footer}</span>
-          </a>
-        `
-      )
-      .join("");
-  }
 }
 
 function mountCountdown(): void {
@@ -185,7 +261,10 @@ function mountCountdown(): void {
     const current = getCountdown();
     const title = window.prompt("倒计时标题", current.title);
     if (!title) return;
-    const targetAt = window.prompt("截止时间，格式 YYYY-MM-DDTHH:MM", current.targetAt.slice(0, 16));
+    const targetAt = window.prompt(
+      "截止时间，格式 YYYY-MM-DDTHH:MM",
+      current.targetAt.slice(0, 16)
+    );
     if (!targetAt) return;
     saveCountdown({
       ...current,
@@ -219,19 +298,19 @@ function mountQuickLinkCreate(): void {
     if (!label) return;
     const url = window.prompt("链接地址，需要包含 https://", "https://");
     if (!url) return;
-    const icon = window.prompt("图标符号", "↗") ?? "↗";
     const next: QuickLink = {
       id: uid("link"),
       label,
       url,
-      icon,
-      accent: "custom"
+      iconId: /github/i.test(url) ? "github" : /bilibili|youtube/i.test(url) ? "video" : "link",
+      accent: /github/i.test(url) ? "night" : /bilibili/i.test(url) ? "sky" : /youtube/i.test(url) ? "rose" : "berry"
     };
     saveQuickLinks([...getQuickLinks(), next]);
     renderQuickLinks();
   });
 }
 
+renderStaticProfile();
 renderCards();
 renderQuickLinks();
 renderTodoPreview();

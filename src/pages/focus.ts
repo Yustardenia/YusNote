@@ -1,5 +1,6 @@
 import { initAppShell } from "../lib/base";
-import { getFocusState, saveFocusState } from "../lib/storage";
+import { playEffect, setAudioVolume } from "../lib/audio";
+import { getAudioPreference, getFocusState, saveFocusState } from "../lib/storage";
 import type { FocusSession, FocusState } from "../lib/types";
 import { clamp, formatDuration, uid } from "../lib/utils";
 import "../styles/global.css";
@@ -29,20 +30,23 @@ function render(): void {
     .toString()
     .padStart(2, "0");
   const seconds = (remainingSeconds % 60).toString().padStart(2, "0");
+  const audioPreference = getAudioPreference();
+
   if (timerEl) timerEl.textContent = `${minutes}:${seconds}`;
   if (modeEl) modeEl.textContent = activeMode === "focus" ? "专注模式" : "休息模式";
   if (countEl) countEl.textContent = `${state.completedCount}`;
   if (minutesEl) minutesEl.textContent = formatDuration(state.totalMinutes);
   if (statusEl) statusEl.textContent = timer ? "计时中" : "准备开始";
-  if (volumeInput) volumeInput.value = String(Math.round(state.volume * 100));
+  if (volumeInput) volumeInput.value = String(Math.round(audioPreference.volume * 100));
   if (autoBreakInput) autoBreakInput.checked = state.autoStartBreak;
 
   if (!sessionList) return;
   sessionList.innerHTML = "";
   if (state.sessions.length === 0) {
-    sessionList.innerHTML = `<li class="empty-state">今天还没有完成任何会话。</li>`;
+    sessionList.innerHTML = `<li class="empty-state">今天还没有完成任何一段专注，可以先从 25 分钟开始。</li>`;
     return;
   }
+
   state.sessions
     .slice()
     .reverse()
@@ -74,25 +78,12 @@ function setMode(minutes: number, mode: Mode): void {
   render();
 }
 
-function beep(volume: number): void {
-  const audio = new AudioContext();
-  const oscillator = audio.createOscillator();
-  const gain = audio.createGain();
-  oscillator.type = "triangle";
-  oscillator.frequency.value = 880;
-  gain.gain.value = volume;
-  oscillator.connect(gain);
-  gain.connect(audio.destination);
-  oscillator.start();
-  oscillator.stop(audio.currentTime + 0.18);
-  oscillator.onended = () => void audio.close();
-}
-
 function completeSession(): void {
   if (activeMode === "focus") {
     state.completedCount += 1;
     state.totalMinutes += state.presetMinutes;
   }
+
   const record: FocusSession = {
     id: uid("focus"),
     finishedAt: new Date().toISOString(),
@@ -101,7 +92,8 @@ function completeSession(): void {
   };
   state.sessions.push(record);
   persistState();
-  beep(state.volume);
+  playEffect("focusComplete");
+
   if (activeMode === "focus" && state.autoStartBreak) {
     setMode(5, "rest");
   }
@@ -115,6 +107,7 @@ function tick(): void {
     timer = null;
     completeSession();
     remainingSeconds = state.presetMinutes * 60;
+    if (toggleButton) toggleButton.textContent = "开始";
   }
   render();
 }
@@ -161,8 +154,10 @@ document.querySelector<HTMLFormElement>("#customPresetForm")?.addEventListener("
 });
 
 volumeInput?.addEventListener("input", () => {
-  state.volume = clamp(Number(volumeInput.value) / 100, 0, 1);
+  const next = clamp(Number(volumeInput.value) / 100, 0, 1);
+  state.volume = next;
   persistState();
+  setAudioVolume(next);
 });
 
 autoBreakInput?.addEventListener("change", () => {

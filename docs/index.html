@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>精选内容 | YusNote</title>
+    <title>内容页 | YusNote</title>
     <script type="module" src="../src/pages/docs.ts"></script>
   </head>
   <body>
     <div class="site-shell">
       <header class="site-header">
         <div class="brand-lockup">
-          <span class="brand-mark">Docs</span>
-          <span class="brand-title">精选内容</span>
-          <span class="brand-subtitle">保留适合长期公开的文档与展示页。</span>
+          <span class="brand-mark">Story Shelf</span>
+          <span class="brand-title">内容页</span>
+          <span class="brand-subtitle">把值得长久摆着的手记、说明和作品页留在这里。</span>
         </div>
         <div class="nav-row">
           <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
@@ -23,19 +23,17 @@
       </header>
 
       <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Curated Docs</span>
-            <h1>把内容页从旧导航里解放出来。</h1>
-            <p class="lead">这里只留下确实值得公开保留的主教程、UI / Audio 手册和作品展示页。</p>
-          </div>
+        <section class="panel hero-card">
+          <span class="eyebrow">Curated Pages</span>
+          <h1 class="page-heading">这里放的是想长久保留的页面，不急着被看完。</h1>
+          <p class="lead">教程、系统说明和展示页都被整理成了更适合公开阅读的样子，像书架里一排会继续慢慢长高的册子。</p>
         </section>
-        <section class="grid-4" id="docsGrid"></section>
+        <section class="dashboard-grid" id="docsGrid"></section>
       </main>
 
       <footer class="site-footer">
-        <span>精选内容</span>
-        <span>© <span data-year></span> 静态版</span>
+        <span>YusNote · 内容页</span>
+        <span>© <span data-year></span> 留给会被反复翻看的内容</span>
       </footer>
     </div>
   </body>

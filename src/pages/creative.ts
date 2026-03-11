@@ -37,7 +37,7 @@ function renderMarkdown(): void {
 }
 
 if (markdownInput) {
-  markdownInput.value = window.localStorage.getItem(markdownKey) ?? "# 今天的记录\n\n- 清理旧结构\n- 搭好静态站";
+markdownInput.value = window.localStorage.getItem(markdownKey) ?? "# 今晚想记下的事\n\n- 整理页面氛围\n- 给作品页补一点说明";
   markdownInput.addEventListener("input", renderMarkdown);
   renderMarkdown();
 }
@@ -171,8 +171,8 @@ document.querySelector<HTMLButtonElement>("#loadFlowExampleButton")?.addEventLis
   if (!flowInput) return;
   flowInput.value = `graph TD
 开始 --> 整理需求
-整理需求 --> 迁移静态页
-迁移静态页 --> 构建验证
+整理灵感 --> 收束页面结构
+收束页面结构 --> 做一轮预览检查
 构建验证 --> 发布`;
   renderFlow();
 });

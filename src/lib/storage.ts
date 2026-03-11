@@ -1,4 +1,5 @@
 import type {
+  AudioPreference,
   CountdownState,
   FocusState,
   KanbanBoard,
@@ -7,7 +8,7 @@ import type {
   ThemePreference,
   TodoItem
 } from "./types";
-import { todayIso, uid } from "./utils";
+import { guessQuickLinkAccent, guessQuickLinkIcon, todayIso, uid } from "./utils";
 
 const keys = {
   theme: "yusnote.theme",
@@ -16,24 +17,43 @@ const keys = {
   schedule: "yusnote.schedule",
   kanban: "yusnote.kanban",
   countdown: "yusnote.countdown",
-  focus: "yusnote.focus"
+  focus: "yusnote.focus",
+  audio: "yusnote.audio"
 } as const;
 
 const defaultQuickLinks: QuickLink[] = [
-  { id: uid("link"), label: "GitHub", url: "https://github.com", icon: "↗", accent: "sunset" },
-  { id: uid("link"), label: "Bilibili", url: "https://www.bilibili.com", icon: "▣", accent: "sea" },
-  { id: uid("link"), label: "YouTube", url: "https://www.youtube.com", icon: "▶", accent: "ember" }
+  {
+    id: uid("link"),
+    label: "GitHub",
+    url: "https://github.com/Yustardenia",
+    iconId: "github",
+    accent: "night"
+  },
+  {
+    id: uid("link"),
+    label: "Bilibili",
+    url: "https://www.bilibili.com",
+    iconId: "video",
+    accent: "sky"
+  },
+  {
+    id: uid("link"),
+    label: "YouTube",
+    url: "https://www.youtube.com",
+    iconId: "video",
+    accent: "rose"
+  }
 ];
 
 const defaultCountdown: CountdownState = {
   id: uid("countdown"),
-  title: "下一次冲刺",
+  title: "下一次见面",
   targetAt: `${todayIso()}T22:00`
 };
 
 const defaultKanban: KanbanBoard = {
   backlog: [
-    { id: uid("task"), text: "整理今天的优先级", note: "", updatedAt: new Date().toISOString() }
+    { id: uid("task"), text: "整理今天最想推进的一件事", note: "", updatedAt: new Date().toISOString() }
   ],
   doing: [],
   done: []
@@ -48,6 +68,14 @@ const defaultFocus = (): FocusState => ({
   totalMinutes: 0,
   sessions: []
 });
+
+const defaultAudioPreference: AudioPreference = {
+  trackId: "moonlit-notes",
+  volume: 0.55,
+  muted: false,
+  effectsEnabled: true,
+  activated: false
+};
 
 function readJson<T>(key: string, fallback: T): T {
   try {
@@ -73,7 +101,21 @@ export function setTheme(theme: ThemePreference): void {
 }
 
 export function getQuickLinks(): QuickLink[] {
-  return readJson(keys.quickLinks, defaultQuickLinks);
+  const links = readJson<any[]>(keys.quickLinks, defaultQuickLinks);
+  return links.map((entry) => ({
+    id: typeof entry.id === "string" ? entry.id : uid("link"),
+    label: typeof entry.label === "string" ? entry.label : "未命名链接",
+    url: typeof entry.url === "string" ? entry.url : "https://example.com",
+    iconId:
+      typeof entry.iconId === "string"
+        ? entry.iconId
+        : guessQuickLinkIcon(String(entry.url ?? ""), String(entry.label ?? "")),
+    emojiFallback: typeof entry.icon === "string" ? entry.icon : entry.emojiFallback,
+    accent:
+      typeof entry.accent === "string"
+        ? entry.accent
+        : guessQuickLinkAccent(String(entry.url ?? ""), String(entry.label ?? ""))
+  }));
 }
 
 export function saveQuickLinks(links: QuickLink[]): void {
@@ -127,4 +169,16 @@ export function getFocusState(): FocusState {
 
 export function saveFocusState(state: FocusState): void {
   writeJson(keys.focus, state);
+}
+
+export function getAudioPreference(): AudioPreference {
+  const saved = readJson<AudioPreference>(keys.audio, defaultAudioPreference);
+  return {
+    ...defaultAudioPreference,
+    ...saved
+  };
+}
+
+export function saveAudioPreference(state: AudioPreference): void {
+  writeJson(keys.audio, state);
 }

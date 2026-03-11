@@ -1,10 +1,46 @@
 export type ThemePreference = "day" | "night";
 
+export type IconId =
+  | "home"
+  | "sparkle"
+  | "bookmark"
+  | "book"
+  | "music"
+  | "moon"
+  | "sun"
+  | "play"
+  | "pause"
+  | "next"
+  | "mute"
+  | "volume"
+  | "grid"
+  | "calendar"
+  | "board"
+  | "clock"
+  | "brush"
+  | "compare"
+  | "rename"
+  | "keyword"
+  | "divination"
+  | "game"
+  | "github"
+  | "video"
+  | "star"
+  | "library"
+  | "controller"
+  | "audio"
+  | "showcase"
+  | "heart"
+  | "flower"
+  | "mail"
+  | "link";
+
 export interface QuickLink {
   id: string;
   label: string;
   url: string;
-  icon: string;
+  iconId: IconId;
+  emojiFallback?: string;
   accent: string;
 }
 
@@ -64,4 +100,48 @@ export interface FocusState {
   completedCount: number;
   totalMinutes: number;
   sessions: FocusSession[];
+}
+
+export interface SiteProfile {
+  name: string;
+  subtitle: string;
+  intro: string;
+  status: string;
+  currentMood: string;
+  avatarAsset: string;
+  wallpaperDay: string;
+  wallpaperNight: string;
+}
+
+export interface CollectionItem {
+  title: string;
+  iconId: IconId;
+  coverAsset: string;
+  description: string;
+  href: string;
+  tags: string[];
+}
+
+export interface ShowcaseItem {
+  title: string;
+  iconId: IconId;
+  coverAsset: string;
+  description: string;
+  href: string;
+  footer: string;
+}
+
+export interface AudioTrack {
+  id: string;
+  title: string;
+  copy: string;
+  src: string;
+}
+
+export interface AudioPreference {
+  trackId: string;
+  volume: number;
+  muted: boolean;
+  effectsEnabled: boolean;
+  activated: boolean;
 }

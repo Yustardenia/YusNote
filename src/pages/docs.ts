@@ -1,5 +1,6 @@
 import { docCards } from "../data/site";
 import { initAppShell } from "../lib/base";
+import { renderIcon } from "../lib/icons";
 import "../styles/global.css";
 
 initAppShell("docs");
@@ -10,11 +11,18 @@ if (grid) {
   grid.innerHTML = docCards
     .map(
       (card) => `
-        <a class="doc-card" href="${card.href}">
-          <span class="card-kicker">${card.kicker}</span>
-          <h3 class="card-title">${card.title}</h3>
-          <p class="card-copy">${card.copy}</p>
-          <span class="card-footer">${card.footer}</span>
+        <a class="doc-card" href="${card.href.replace("./docs/", "./")}">
+          <div class="card-cover" style="background-image: url('${card.coverAsset}')"></div>
+          <div class="card-body">
+            <span class="card-kicker">${card.kicker}</span>
+            <div class="card-headline">
+              ${renderIcon(card.iconId)}
+              <h3 class="card-title">${card.title}</h3>
+            </div>
+            <p class="card-copy">${card.copy}</p>
+            <div class="card-tags">${card.tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}</div>
+            <span class="card-footer">${card.footer}</span>
+          </div>
         </a>
       `
     )

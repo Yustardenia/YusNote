@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YusNote | 静态工作台</title>
+    <title>YusNote | 夜色收藏柜</title>
     <script type="module" src="./src/pages/home.ts"></script>
   </head>
   <body>
     <div class="site-shell">
       <header class="site-header">
         <div class="brand-lockup">
-          <span class="brand-mark">Static Desk</span>
+          <span class="brand-mark">Personal Site</span>
           <span class="brand-title">YusNote</span>
-          <span class="brand-subtitle">为 GitHub Pages 重构的静态个人工作台。</span>
+          <span class="brand-subtitle" id="profileSubtitle"></span>
         </div>
         <div class="nav-row">
           <a class="nav-chip" data-nav="home" href="./index.html">首页</a>
@@ -23,14 +23,16 @@
       </header>
 
       <main class="page-main">
-        <section class="hero">
-          <article class="panel">
-            <span class="eyebrow">Workflow Dashboard</span>
-            <h1>保留效率感，删除后端负担。</h1>
-            <p>
-              这个版本只保留纯前端工具和精选内容。数据全部留在浏览器本地，适合直接发布到
-              GitHub Pages，也适合在任意静态服务器上原样运行。
-            </p>
+        <section class="hero-grid">
+          <article class="panel hero-card">
+            <span class="eyebrow">Night Shelf</span>
+            <h1 class="hero-title">把收藏、灵感和常用页面都放回一个更像“我”的网站里。</h1>
+            <p class="hero-note" id="profileIntro"></p>
+            <div class="status-strip" id="statusPills"></div>
+            <div class="split-actions hero-actions">
+              <a class="button" href="./docs/will-of-the-city.html">先去看展示页</a>
+              <a class="ghost-button" href="./tools/creative.html">打开灵感页</a>
+            </div>
             <form class="search-shell" id="searchForm">
               <select id="engineSelect" aria-label="搜索引擎">
                 <option value="bing">Bing</option>
@@ -38,169 +40,150 @@
                 <option value="github">GitHub</option>
                 <option value="bilibili">Bilibili</option>
               </select>
-              <input id="searchInput" type="search" placeholder="搜索今天要推进的内容" />
-              <button class="button" type="submit">立即搜索</button>
+              <input id="searchInput" type="search" placeholder="搜一首歌、一段资料，或者今天想继续写的东西" />
+              <button class="button" type="submit">开始搜索</button>
             </form>
-            <div class="chip-row">
-              <span class="meta-chip">静态发布</span>
-              <span class="meta-chip">本地存储</span>
-              <span class="meta-chip">多页 Vite</span>
-              <span class="meta-chip">HTML / CSS / JS / TS</span>
-            </div>
           </article>
 
-          <aside class="panel stack">
-            <div>
-              <div class="label">当前倒计时</div>
-              <div class="metric-value" id="countdownValue">-- : -- : --</div>
-              <p class="card-copy" id="countdownTitle">正在读取本地目标…</p>
+          <aside class="portrait-card">
+            <div class="portrait-card__media">
+              <img id="profileAvatar" alt="" />
             </div>
-            <div class="split-actions">
-              <button class="button" type="button" id="editCountdownButton">编辑倒计时</button>
-              <a class="ghost-button" href="./tools/focus.html">打开专注页</a>
-            </div>
-            <div class="grid-2">
-              <section class="metric-card">
-                <div class="metric-label">今日完成番茄钟</div>
-                <div class="metric-value" id="focusCount">0</div>
-              </section>
-              <section class="metric-card">
-                <div class="metric-label">累计专注时长</div>
-                <div class="metric-value" id="focusMinutes">0 分钟</div>
-              </section>
+            <div class="portrait-card__meta">
+              <span class="eyebrow eyebrow--small">Current Status</span>
+              <p class="portrait-card__headline" id="profileStatus"></p>
+              <p class="portrait-card__quote">当前氛围：<span id="profileMood"></span></p>
+              <div class="grid-2">
+                <section class="metric-card">
+                  <div class="metric-label">今日专注</div>
+                  <div class="metric-value" id="focusCount">0</div>
+                </section>
+                <section class="metric-card">
+                  <div class="metric-label">累计时长</div>
+                  <div class="metric-value" id="focusMinutes">0 分钟</div>
+                </section>
+              </div>
             </div>
           </aside>
         </section>
 
         <section class="grid-4">
           <article class="metric-card">
-            <div class="metric-label">未完成任务</div>
+            <div class="metric-label">待办数量</div>
             <div class="metric-value" id="todoCount">0</div>
-            <p class="card-copy">从 Todo 与看板里优先读出接下来要推进的事项。</p>
+            <p class="card-copy">今天还有几件想推进的小事，抬头就能看见。</p>
           </article>
           <article class="metric-card">
             <div class="metric-label">今日日程</div>
             <div class="metric-value" id="scheduleCount">0</div>
-            <p class="card-copy">默认读取今天的安排，帮助首页保持低噪声。</p>
+            <p class="card-copy">把日程摆成温柔一点的节奏，不让事情一下子挤过来。</p>
           </article>
           <article class="metric-card">
-            <div class="metric-label">看板积压</div>
-            <div class="metric-value" id="kanbanBacklogCount">0</div>
-            <p class="card-copy">专门显示 backlog 数量，避免任务堆积失控。</p>
-          </article>
-          <article class="metric-card">
-            <div class="metric-label">快捷链接</div>
+            <div class="metric-label">常驻链接</div>
             <div class="metric-value" id="quickLinkCount">0</div>
-            <p class="card-copy">保留常用入口，不再依赖旧首页的侧栏与门禁。</p>
+            <p class="card-copy">站外入口仍然保留，只是换成更好看的方式摆出来。</p>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">倒计时</div>
+            <div class="metric-value" id="countdownValue">-- : -- : --</div>
+            <p class="card-copy" id="countdownTitle">正在读取目标中...</p>
           </article>
         </section>
 
         <section class="section-head">
           <div>
-            <h2 class="section-title">本地工作台</h2>
-            <p class="section-copy">首页只展示最需要一眼看到的内容，细节留给具体工具页。</p>
+            <h2 class="section-title">收藏橱窗</h2>
+            <p class="section-copy">首页先放最能代表这间小站气质的入口，而不是一次把所有功能都铺开。</p>
           </div>
         </section>
+        <section class="shelf-grid" id="collectionGrid"></section>
 
-        <section class="grid-3">
+        <section class="preview-grid">
           <article class="surface">
-            <div class="label">快捷链接</div>
-            <div class="split-actions" style="margin-top: 14px">
+            <div class="split-actions">
+              <div>
+                <div class="label">常驻链接</div>
+                <p class="muted">把最常打开的地方放在这一页。</p>
+              </div>
               <button class="button" type="button" id="addQuickLinkButton">新增链接</button>
             </div>
             <ul class="list-reset mini-list" id="quickLinksList" style="margin-top: 16px"></ul>
           </article>
 
           <article class="surface">
-            <div class="label">待办预览</div>
-            <ul class="list-reset mini-list" id="todoPreview" style="margin-top: 16px"></ul>
+            <div class="split-actions">
+              <div>
+                <div class="label">当前倒计时</div>
+                <p class="muted">想挂在首页的目标，就放在这里慢慢看它接近。</p>
+              </div>
+              <button class="ghost-button" type="button" id="editCountdownButton">编辑倒计时</button>
+            </div>
+            <div class="metric-value" style="margin-top: 16px" id="countdownValueMobile">请看上面的时间牌</div>
+            <p class="card-copy">如果你更常用 Todo 或看板，也可以在对应页面一键同步过来。</p>
           </article>
 
-          <article class="surface">
-            <div class="label">今日安排</div>
-            <ul class="list-reset mini-list" id="schedulePreview" style="margin-top: 16px"></ul>
-          </article>
-        </section>
-
-        <section class="grid-2">
           <article class="surface">
             <div class="label">看板概览</div>
-            <div class="grid-3" style="margin-top: 16px">
+            <div class="mini-list" style="margin-top: 16px">
               <div class="mini-item">
                 <div>
                   <strong>Backlog</strong>
-                  <span class="muted">待拆解</span>
+                  <span class="muted">还没拆开的念头</span>
                 </div>
                 <span class="pill" id="kanbanBacklogMini">0</span>
               </div>
               <div class="mini-item">
                 <div>
                   <strong>Doing</strong>
-                  <span class="muted">推进中</span>
+                  <span class="muted">正在推进的部分</span>
                 </div>
                 <span class="pill" id="kanbanDoingMini">0</span>
               </div>
               <div class="mini-item">
                 <div>
                   <strong>Done</strong>
-                  <span class="muted">完成区</span>
+                  <span class="muted">已经落下来的进度</span>
                 </div>
                 <span class="pill" id="kanbanDoneMini">0</span>
               </div>
             </div>
-            <div class="split-actions" style="margin-top: 16px">
-              <a class="button" href="./tools/kanban.html">打开看板</a>
-              <a class="ghost-button" href="./tools/todo.html">打开 Todo</a>
-            </div>
           </article>
+        </section>
 
+        <section class="grid-2">
           <article class="surface">
-            <div class="label">这次改造完成了什么</div>
-            <ul class="mini-list list-reset" style="margin-top: 16px">
-              <li class="mini-item">
-                <div>
-                  <strong>后端依赖已移除</strong>
-                  <span class="muted">不再需要 PHP、Python、本机服务和上传目录。</span>
-                </div>
-              </li>
-              <li class="mini-item">
-                <div>
-                  <strong>所有核心数据都本地化</strong>
-                  <span class="muted">Todo、日程、看板、倒计时、专注统计统一落到 localStorage。</span>
-                </div>
-              </li>
-              <li class="mini-item">
-                <div>
-                  <strong>站点结构扁平化</strong>
-                  <span class="muted">首页负责导航，工具与内容用明确的英文 slug 分层。</span>
-                </div>
-              </li>
-            </ul>
+            <div class="label">待办预览</div>
+            <ul class="list-reset mini-list" id="todoPreview" style="margin-top: 16px"></ul>
+          </article>
+          <article class="surface">
+            <div class="label">今日安排</div>
+            <ul class="list-reset mini-list" id="schedulePreview" style="margin-top: 16px"></ul>
           </article>
         </section>
 
         <section class="section-head">
           <div>
-            <h2 class="section-title">工具页</h2>
-            <p class="section-copy">保留纯前端能力，删掉监控、上传、转换和后台管理。</p>
+            <h2 class="section-title">功能入口</h2>
+            <p class="section-copy">工具还在，只是退到站点的第二层，像房间里一排整齐的抽屉。</p>
           </div>
-          <a class="ghost-button" href="./tools/creative.html">先开 Creative Studio</a>
+          <a class="ghost-button" href="./tools/focus.html">打开专注页</a>
         </section>
-        <section class="grid-4" id="toolGrid"></section>
+        <section class="dashboard-grid" id="toolGrid"></section>
 
         <section class="section-head">
           <div>
-            <h2 class="section-title">精选内容</h2>
-            <p class="section-copy">不再把所有旧页面堆在首页，只保留需要长期公开的文档与展示。</p>
+            <h2 class="section-title">作品与手记</h2>
+            <p class="section-copy">把想长期保留的内容单独陈列出来，让它们可以慢一点被看见。</p>
           </div>
-          <a class="ghost-button" href="./docs/index.html">查看全部文档</a>
+          <a class="ghost-button" href="./docs/index.html">进入内容页</a>
         </section>
-        <section class="grid-4" id="docGrid"></section>
+        <section class="showcase-grid" id="showcaseGrid"></section>
+        <section class="dashboard-grid" id="docGrid"></section>
       </main>
 
       <footer class="site-footer">
-        <span>YusNote Static Edition</span>
-        <span>© <span data-year></span> 本地存储驱动，无后端。</span>
+        <span>YusNote</span>
+        <span>© <span data-year></span> 收藏、灵感与一点夜色音乐</span>
       </footer>
     </div>
   </body>
