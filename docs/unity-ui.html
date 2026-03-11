@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity UI 体系 | YusNote</title>
+    <script type="module" src="../src/pages/doc.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Docs</span>
+          <span class="brand-title">Unity UI 体系</span>
+          <span class="brand-subtitle">把旧版 UI 文档聚焦成结构、职责和落地准则。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="../tools/todo.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="./index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="docs-layout page-main">
+        <article class="article">
+          <h2>UI 层应该解决什么</h2>
+          <p>UI 不是简单地把 Prefab 堆上去，而是负责输入、状态展示和数据映射。整理版文档只保留最实用的三层模型：页面控制器、通用组件、数据绑定适配层。</p>
+          <h3>建议结构</h3>
+          <ul>
+            <li>Page：负责生命周期、页面切换、状态编排。</li>
+            <li>Widget：负责局部复用，比如列表项、弹窗、提示条。</li>
+            <li>Binding：负责把运行时数据投射到文本、按钮、图标和动画。</li>
+          </ul>
+          <h3>实践准则</h3>
+          <ul>
+            <li>页面脚本不直接查找全场景对象，依赖统一注入或初始化入口。</li>
+            <li>列表项只关心单条数据，列表控制器统一处理增删和刷新。</li>
+            <li>UI 状态优先走显式枚举，不要把多个布尔开关拼在一起。</li>
+          </ul>
+          <pre><code>public sealed class InventoryPage : UIPage
+{
+    public override void OnOpen(PageArgs args)
+    {
+        BindToolbar();
+        RenderItems();
+    }
+}</code></pre>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <span>Unity UI 体系</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

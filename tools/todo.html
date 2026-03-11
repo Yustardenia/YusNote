@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo 清单 | YusNote</title>
+    <script type="module" src="../src/pages/todo.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Tool</span>
+          <span class="brand-title">Todo 清单</span>
+          <span class="brand-subtitle">快速记录、完成、删除，并可同步到首页倒计时。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="./todo.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero">
+          <div>
+            <span class="eyebrow">Checklist</span>
+            <h1>把今天的事写清楚。</h1>
+            <p class="lead">所有条目只保存在浏览器本地，不再依赖原来的 `todo_api` 和 `countdown_api`。</p>
+          </div>
+        </section>
+
+        <section class="two-column">
+          <article class="surface">
+            <form class="form-grid" id="todoForm">
+              <div class="field">
+                <label for="todoText">任务内容</label>
+                <input id="todoText" name="todoText" type="text" placeholder="例如：整理 GitHub Pages 发布说明" required />
+              </div>
+              <div class="field">
+                <label for="todoDueAt">截止时间</label>
+                <input id="todoDueAt" name="todoDueAt" type="datetime-local" />
+              </div>
+              <div class="split-actions">
+                <button class="button" type="submit">添加任务</button>
+                <button class="ghost-button" type="reset">清空输入</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="surface stack">
+            <div class="label">快速过滤</div>
+            <div class="split-actions">
+              <button class="ghost-button" data-filter="all" type="button">全部</button>
+              <button class="ghost-button" data-filter="open" type="button">未完成</button>
+              <button class="ghost-button" data-filter="done" type="button">已完成</button>
+            </div>
+            <div class="muted">当前共 <strong id="todoTotal">0</strong> 条。</div>
+          </article>
+        </section>
+
+        <section class="surface">
+          <div class="label">任务列表</div>
+          <ul class="list-reset mini-list" id="todoList" style="margin-top: 16px"></ul>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Todo 工具页</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro | YusNote</title>
+    <script type="module" src="../src/pages/focus.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Tool</span>
+          <span class="brand-title">Pomodoro</span>
+          <span class="brand-subtitle">纯前端专注页，保留统计，移除音频广播与用户隔离。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="./focus.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero">
+          <div>
+            <span class="eyebrow">Focus</span>
+            <h1>这次只保留真正有用的专注功能。</h1>
+            <p class="lead">本地计时、番茄统计、短休息切换和音量设置都还在，但已经完全脱离旧站的音乐与用户会话系统。</p>
+          </div>
+        </section>
+
+        <section class="two-column">
+          <article class="surface stack">
+            <div class="metric-card" style="text-align: center">
+              <div class="metric-label" id="focusModeLabel">当前模式</div>
+              <div class="metric-value" id="focusTimer">25:00</div>
+              <p class="card-copy" id="focusStatus">准备开始</p>
+            </div>
+
+            <div class="split-actions">
+              <button class="ghost-button" type="button" data-preset="25" data-mode="focus">25 分钟专注</button>
+              <button class="ghost-button" type="button" data-preset="50" data-mode="focus">50 分钟深度</button>
+              <button class="ghost-button" type="button" data-preset="5" data-mode="rest">5 分钟休息</button>
+              <button class="ghost-button" type="button" data-preset="15" data-mode="rest">15 分钟长休</button>
+            </div>
+
+            <form class="split-actions" id="customPresetForm">
+              <input id="customMinutes" type="number" min="1" max="180" placeholder="自定义分钟" />
+              <select id="customMode">
+                <option value="focus">专注</option>
+                <option value="rest">休息</option>
+              </select>
+              <button class="ghost-button" type="submit">应用</button>
+            </form>
+
+            <div class="split-actions">
+              <button class="button" type="button" id="toggleFocusButton">开始</button>
+              <button class="ghost-button" type="button" id="resetFocusButton">重置</button>
+            </div>
+          </article>
+
+          <article class="surface stack">
+            <div class="grid-2">
+              <section class="metric-card">
+                <div class="metric-label">今日完成</div>
+                <div class="metric-value" id="focusDoneCount">0</div>
+              </section>
+              <section class="metric-card">
+                <div class="metric-label">今日总时长</div>
+                <div class="metric-value" id="focusDoneMinutes">0 分钟</div>
+              </section>
+            </div>
+
+            <div class="field">
+              <label for="focusVolume">提示音音量</label>
+              <input id="focusVolume" type="range" min="0" max="100" value="65" />
+            </div>
+
+            <label class="mini-item">
+              <div>
+                <strong>专注完成后自动切换到 5 分钟休息</strong>
+                <span class="muted">关闭时只会提示完成，不会自动变更模式。</span>
+              </div>
+              <input id="autoBreak" type="checkbox" />
+            </label>
+
+            <div>
+              <div class="label">今日会话记录</div>
+              <ul class="list-reset mini-list" id="focusSessionList" style="margin-top: 16px"></ul>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Focus 工具页</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

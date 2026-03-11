@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>时间安排 | YusNote</title>
+    <script type="module" src="../src/pages/schedule.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Tool</span>
+          <span class="brand-title">时间安排</span>
+          <span class="brand-subtitle">按日期管理日程，保留状态与备注。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="./schedule.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero">
+          <div>
+            <span class="eyebrow">Schedule</span>
+            <h1>给一天排一个清晰轮廓。</h1>
+            <p class="lead">默认按当天过滤，支持编辑和删除。所有安排直接写入本地存储。</p>
+          </div>
+        </section>
+
+        <section class="two-column">
+          <article class="surface">
+            <form class="form-grid" id="scheduleForm">
+              <div class="field">
+                <label for="title">事项标题</label>
+                <input id="title" name="title" type="text" placeholder="例如：重构 Creative 工具页" required />
+              </div>
+              <div class="field">
+                <label for="date">日期</label>
+                <input id="date" name="date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="start">开始时间</label>
+                <input id="start" name="start" type="datetime-local" required />
+              </div>
+              <div class="field">
+                <label for="end">结束时间</label>
+                <input id="end" name="end" type="datetime-local" required />
+              </div>
+              <div class="field">
+                <label for="status">状态</label>
+                <select id="status" name="status">
+                  <option value="planned">还没开始</option>
+                  <option value="doing">正在进行</option>
+                  <option value="done">已经完成</option>
+                  <option value="skipped">今天算了</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="filterDate">查看日期</label>
+                <input id="filterDate" name="filterDate" type="date" />
+              </div>
+              <div class="field">
+                <label for="note">备注</label>
+                <textarea id="note" name="note" placeholder="写一点上下文、提醒或者临时变动"></textarea>
+              </div>
+              <div class="split-actions">
+                <button class="button" type="submit" id="saveScheduleButton">保存安排</button>
+                <button class="ghost-button" type="reset">重置表单</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="surface">
+            <div class="label">安排列表</div>
+            <ul class="list-reset mini-list" id="scheduleList" style="margin-top: 16px"></ul>
+          </article>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Schedule 工具页</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

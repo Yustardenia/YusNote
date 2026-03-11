@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creative Studio | YusNote</title>
+    <script type="module" src="../src/pages/creative.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Tool</span>
+          <span class="brand-title">Creative Studio</span>
+          <span class="brand-subtitle">把 Markdown、白板和流程图收进一个静态页面。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="./creative.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero">
+          <div>
+            <span class="eyebrow">Creative</span>
+            <h1>做笔记、画草图、画流程。</h1>
+            <p class="lead">这是原“创意工坊”的纯前端版，保留最常用的三种创作模式。</p>
+          </div>
+        </section>
+
+        <section class="surface">
+          <div class="tabs">
+            <button class="tab-button" type="button" data-tab="note" data-active="true">Markdown 笔记</button>
+            <button class="tab-button" type="button" data-tab="draw">白板</button>
+            <button class="tab-button" type="button" data-tab="flow">流程图</button>
+          </div>
+        </section>
+
+        <section class="page-main" id="creativePanels">
+          <article class="surface" data-panel="note">
+            <div class="split-actions">
+              <button class="ghost-button" type="button" data-md-action="h2">插入标题</button>
+              <button class="ghost-button" type="button" data-md-action="list">插入列表</button>
+              <button class="ghost-button" type="button" data-md-action="quote">插入引用</button>
+              <button class="ghost-button" type="button" id="exportMarkdownButton">导出 Markdown</button>
+            </div>
+            <div class="grid-2" style="margin-top: 16px">
+              <div class="field">
+                <label for="markdownInput">Markdown</label>
+                <textarea id="markdownInput" placeholder="# 今天要推进什么"></textarea>
+              </div>
+              <div class="field">
+                <label>预览</label>
+                <div class="surface" id="markdownPreview"></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="surface" data-panel="draw" hidden>
+            <div class="split-actions">
+              <input id="drawColor" type="color" value="#c45d3f" />
+              <input id="drawSize" type="range" min="2" max="24" value="6" />
+              <button class="ghost-button" type="button" id="drawPenButton">画笔</button>
+              <button class="ghost-button" type="button" id="drawEraserButton">橡皮</button>
+              <button class="ghost-button" type="button" id="clearCanvasButton">清空</button>
+              <button class="ghost-button" type="button" id="exportCanvasButton">导出 PNG</button>
+            </div>
+            <div class="canvas-shell" style="margin-top: 16px">
+              <canvas id="drawCanvas" width="1100" height="520"></canvas>
+            </div>
+          </article>
+
+          <article class="surface" data-panel="flow" hidden>
+            <div class="split-actions">
+              <button class="ghost-button" type="button" id="loadFlowExampleButton">加载示例</button>
+              <button class="ghost-button" type="button" id="renderFlowButton">渲染</button>
+              <button class="ghost-button" type="button" id="exportFlowButton">导出 SVG</button>
+            </div>
+            <div class="grid-2" style="margin-top: 16px">
+              <div class="field">
+                <label for="flowInput">Mermaid 代码</label>
+                <textarea id="flowInput">graph TD
+开始 --> 收集需求
+收集需求 --> 拆分任务
+拆分任务 --> 发布静态站</textarea>
+              </div>
+              <div class="field">
+                <label>渲染预览</label>
+                <div class="surface" id="flowPreview"></div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Creative 工具页</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

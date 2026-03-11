@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>年度关键词 | YusNote</title>
+    <script type="module" src="../src/pages/keyword.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Tool</span>
+          <span class="brand-title">年度关键词</span>
+          <span class="brand-subtitle">轻量互动页，输入名字即可生成稳定结果。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="./keyword.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="surface" style="max-width: 760px; margin: 0 auto">
+          <span class="eyebrow">Keyword</span>
+          <h1 class="page-heading">给自己抽一个年度关键词。</h1>
+          <p class="lead">结果由名字计算得到，同一个名字会得到同样的关键词。</p>
+          <form class="form-grid" id="keywordForm">
+            <div class="field">
+              <label for="keywordName">名字</label>
+              <input id="keywordName" type="text" placeholder="输入你的名字或昵称" required />
+            </div>
+            <div class="split-actions">
+              <button class="button" type="submit">生成关键词</button>
+              <button class="ghost-button" type="button" id="resetKeywordButton">重置</button>
+            </div>
+          </form>
+          <section class="metric-card" id="keywordResult" hidden style="margin-top: 20px">
+            <div class="metric-label">属于 <span id="keywordOwner"></span> 的年度关键词</div>
+            <div class="metric-value" id="keywordWord">—</div>
+            <p class="card-copy" id="keywordDescription"></p>
+          </section>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Keyword 工具页</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

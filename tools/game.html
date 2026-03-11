@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyber Dash | YusNote</title>
+    <script type="module" src="../src/pages/game.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Tool</span>
+          <span class="brand-title">Cyber Dash</span>
+          <span class="brand-subtitle">一个不依赖背景音乐和跨页广播的轻量小游戏。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="./game.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="surface stack">
+          <div class="split-actions">
+            <div>
+              <div class="label">当前分数</div>
+              <div class="metric-value" id="gameScore">0</div>
+            </div>
+            <div>
+              <div class="label">最高分</div>
+              <div class="metric-value" id="gameBest">0</div>
+            </div>
+            <button class="button" type="button" id="startGameButton">开始游戏</button>
+          </div>
+          <div class="canvas-shell">
+            <canvas id="gameCanvas" width="1100" height="580"></canvas>
+          </div>
+          <p class="card-copy">移动鼠标或手指控制蓝色核心，避开红色方块，吃掉绿色数据点。</p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Game 工具页</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

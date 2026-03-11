@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>看板 | YusNote</title>
+    <script type="module" src="../src/pages/kanban.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Tool</span>
+          <span class="brand-title">看板</span>
+          <span class="brand-subtitle">拖拽任务流转，继续保留 backlog / doing / done 结构。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="./kanban.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero">
+          <div>
+            <span class="eyebrow">Kanban</span>
+            <h1>让任务真的流动起来。</h1>
+            <p class="lead">拖拽、编辑、删除和设置倒计时都留在前端；不再需要旧的 `kanban_api`。</p>
+          </div>
+        </section>
+
+        <section class="grid-3" id="kanbanBoard">
+          <article class="surface" data-column="backlog">
+            <div class="split-actions">
+              <div>
+                <div class="label">Backlog</div>
+                <strong id="countBacklog">0</strong>
+              </div>
+              <button class="ghost-button" type="button" data-add="backlog">新增</button>
+            </div>
+            <div class="stack" id="backlogList" style="margin-top: 16px"></div>
+          </article>
+
+          <article class="surface" data-column="doing">
+            <div class="split-actions">
+              <div>
+                <div class="label">Doing</div>
+                <strong id="countDoing">0</strong>
+              </div>
+              <button class="ghost-button" type="button" data-add="doing">新增</button>
+            </div>
+            <div class="stack" id="doingList" style="margin-top: 16px"></div>
+          </article>
+
+          <article class="surface" data-column="done">
+            <div class="split-actions">
+              <div>
+                <div class="label">Done</div>
+                <strong id="countDone">0</strong>
+              </div>
+              <button class="ghost-button" type="button" data-add="done">新增</button>
+            </div>
+            <div class="stack" id="doneList" style="margin-top: 16px"></div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Kanban 工具页</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>

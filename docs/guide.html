@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yus 开发总览 | YusNote</title>
+    <script type="module" src="../src/pages/doc.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark">Docs</span>
+          <span class="brand-title">Yus 开发总览</span>
+          <span class="brand-subtitle">把原始大而散的教程整理成可快速查阅的路线图。</span>
+        </div>
+        <div class="nav-row">
+          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
+          <a class="nav-chip" data-nav="tools" href="../tools/todo.html">工具</a>
+          <a class="nav-chip" data-nav="docs" href="./index.html">内容</a>
+          <button class="theme-button" type="button" data-theme-toggle></button>
+        </div>
+      </header>
+
+      <main class="docs-layout page-main">
+        <article class="article">
+          <h2>整理目标</h2>
+          <p>旧版主页同时承担了入口页、工具箱和长篇文档的职责。静态化之后，这份总览只负责回答三个问题：框架里有哪些模块、推荐如何组织项目、每次开发应该先从哪里动手。</p>
+          <h3>核心模块地图</h3>
+          <ul>
+            <li>基础能力：Attributes、事件系统、定时器、协程、状态机。</li>
+            <li>资源与运行时：资源加载、对象池、相机、Tween、动画。</li>
+            <li>工具与生产链路：Excel 导入、Editor 扩展、资产导出、二进制存储。</li>
+            <li>表现层：UI 系统、音频系统、本地化系统。</li>
+          </ul>
+          <h3>推荐目录</h3>
+          <pre><code>Assets/
+  Runtime/
+    Core/
+    Gameplay/
+    UI/
+    Audio/
+  Editor/
+  Config/
+  Addressables/</code></pre>
+          <h3>使用顺序</h3>
+          <ol>
+            <li>先落基础模块：事件、定时器、资源、对象池。</li>
+            <li>再建表现层：UI、音频、动画和相机。</li>
+            <li>最后补工具链：Excel、导出、调试辅助和持久化。</li>
+          </ol>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <span>Yus 开发总览</span>
+        <span>© <span data-year></span> 静态版</span>
+      </footer>
+    </div>
+  </body>
+</html>
