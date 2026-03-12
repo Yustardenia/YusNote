@@ -1,4 +1,4 @@
-import Sortable from "sortablejs";
+﻿import Sortable from "sortablejs";
 import { initAppShell } from "../lib/base";
 import { getCountdown, getKanban, saveCountdown, saveKanban } from "../lib/storage";
 import type { KanbanBoard, KanbanTask } from "../lib/types";
@@ -65,8 +65,7 @@ function render(): void {
       if (!task) return;
       const current = getCountdown();
       const targetAt =
-        window.prompt("截止时间，格式 YYYY-MM-DDTHH:MM", task.dueAt?.slice(0, 16) ?? current.targetAt.slice(0, 16)) ??
-        "";
+        window.prompt("截止时间，格式 YYYY-MM-DDTHH:MM", task.dueAt?.slice(0, 16) ?? current.targetAt.slice(0, 16)) ?? "";
       if (!targetAt) return;
       saveCountdown({
         ...current,

@@ -7,30 +7,18 @@
     <script type="module" src="../src/pages/focus.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">Pomodoro</span>
-          <span class="brand-subtitle">把专注、短休和提醒声放在同一页里，留给自己一个安静的计时角落。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>Pomodoro</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./focus.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Focus</span>
-            <h1>这次只保留真正有用的专注功能。</h1>
-            <p class="lead">这里保留计时、番茄统计、短休息切换和提醒音，只是把整体体验收得更轻一点，也更适合常驻在这个站里。</p>
-          </div>
-        </section>
-
+      <main class="workspace-main">
         <section class="two-column">
           <article class="surface stack">
             <div class="metric-card" style="text-align: center">
@@ -93,11 +81,6 @@
           </article>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Focus 工具页</span>
-        <span>© <span data-year></span> 给自己留一个安静计时的角落</span>
-      </footer>
     </div>
   </body>
 </html>

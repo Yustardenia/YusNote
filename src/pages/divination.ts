@@ -1,4 +1,4 @@
-import { trigrams } from "../data/trigrams";
+﻿import { trigrams } from "../data/trigrams";
 import { initAppShell } from "../lib/base";
 import "../styles/global.css";
 
@@ -49,15 +49,17 @@ function renderCast(): void {
   }
 
   if (nameMount) {
-    nameMount.textContent = `${upperTri.name}上${lowerTri.name}下 ${upperTri.symbol}${lowerTri.symbol}`;
+    nameMount.textContent = `${upperTri.name}上${lowerTri.name}下 · ${upperTri.symbol}${lowerTri.symbol}`;
   }
 
   if (summaryMount) {
-    summaryMount.textContent = `上卦为${upperTri.element}，主 ${upperTri.keyword}；下卦为${lowerTri.element}，主 ${lowerTri.keyword}。${changing ? `本次出现动爻：${changing}。` : "本次没有动爻，宜按当前节奏稳步推进。"}`;
+    summaryMount.textContent = `上卦为 ${upperTri.element}，主 ${upperTri.keyword}；下卦为 ${lowerTri.element}，主 ${lowerTri.keyword}。${
+      changing ? `本次出现动爻：${changing}。` : "本次没有动爻，宜按当前节奏稳步推进。"
+    }`;
   }
 
   if (adviceMount) {
-    adviceMount.textContent = `${upperTri.action} 同时，${lowerTri.action}`;
+    adviceMount.textContent = `${upperTri.action}，同时 ${lowerTri.action}`;
   }
 }
 

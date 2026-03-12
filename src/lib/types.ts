@@ -1,5 +1,7 @@
 export type ThemePreference = "day" | "night";
 
+export type SearchEngine = "bing" | "bilibili" | "pixiv";
+
 export type IconId =
   | "home"
   | "sparkle"
@@ -38,7 +40,21 @@ export type IconId =
   | "heart"
   | "flower"
   | "mail"
-  | "link";
+  | "link"
+  | "search"
+  | "markdown"
+  | "image"
+  | "pdf"
+  | "download"
+  | "upload"
+  | "trash"
+  | "duplicate"
+  | "mindmap"
+  | "layers"
+  | "shape"
+  | "type"
+  | "note"
+  | "wand";
 
 export interface QuickLink {
   id: string;
@@ -150,4 +166,129 @@ export interface AudioPreference {
   muted: boolean;
   effectsEnabled: boolean;
   activated: boolean;
+  collapsed: boolean;
+}
+
+export interface CreativeDoc {
+  id: string;
+  name: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type BoardTool =
+  | "select"
+  | "pen"
+  | "highlighter"
+  | "eraser"
+  | "line"
+  | "rect"
+  | "ellipse"
+  | "arrow"
+  | "text"
+  | "note";
+
+export interface BoardStrokePoint {
+  x: number;
+  y: number;
+}
+
+export interface BoardBaseElement {
+  id: string;
+  type: "stroke" | "shape" | "text" | "asset" | "note";
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: string;
+  rotation?: number;
+  createdAt: string;
+}
+
+export interface BoardStrokeElement extends BoardBaseElement {
+  type: "stroke";
+  tool: "pen" | "highlighter" | "eraser";
+  size: number;
+  points: BoardStrokePoint[];
+}
+
+export interface BoardShapeElement extends BoardBaseElement {
+  type: "shape";
+  shape: "line" | "rect" | "ellipse" | "arrow";
+  strokeWidth: number;
+  fill?: string;
+}
+
+export interface BoardTextElement extends BoardBaseElement {
+  type: "text" | "note";
+  text: string;
+  fontSize: number;
+  background?: string;
+}
+
+export type BoardAssetType = "image" | "pdf-page" | "markdown-card";
+
+export interface BoardAssetElement extends BoardBaseElement {
+  type: "asset";
+  assetType: BoardAssetType;
+  src?: string;
+  label?: string;
+  page?: number;
+  payload?: string;
+}
+
+export type BoardElement =
+  | BoardStrokeElement
+  | BoardShapeElement
+  | BoardTextElement
+  | BoardAssetElement;
+
+export interface CreativeBoardPage {
+  id: string;
+  name: string;
+  elements: BoardElement[];
+}
+
+export interface CreativeBoardProject {
+  id: string;
+  name: string;
+  pages: CreativeBoardPage[];
+  activePageId: string;
+  updatedAt: string;
+}
+
+export interface MindMapNode {
+  id: string;
+  text: string;
+  color: string;
+  collapsed: boolean;
+  x: number;
+  y: number;
+  children: MindMapNode[];
+}
+
+export interface MindMapProject {
+  id: string;
+  name: string;
+  rootNode: MindMapNode;
+  updatedAt: string;
+}
+
+export type MermaidTemplateKind =
+  | "flowchart"
+  | "sequence"
+  | "gantt"
+  | "state"
+  | "class"
+  | "er"
+  | "journey"
+  | "mindmap";
+
+export interface MermaidSnippet {
+  id: string;
+  name: string;
+  code: string;
+  templateKind: MermaidTemplateKind;
+  updatedAt: string;
 }

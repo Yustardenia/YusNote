@@ -1,4 +1,4 @@
-import { initAppShell } from "../lib/base";
+﻿import { initAppShell } from "../lib/base";
 import { playEffect, setAudioVolume } from "../lib/audio";
 import { getAudioPreference, getFocusState, saveFocusState } from "../lib/storage";
 import type { FocusSession, FocusState } from "../lib/types";

@@ -7,30 +7,18 @@
     <script type="module" src="../src/pages/rename.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">批量重命名</span>
-          <span class="brand-subtitle">保留本地处理和 ZIP 导出，不再依赖服务器文件夹。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>批量重命名</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./rename.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Rename</span>
-            <h1>浏览器内整理文件名。</h1>
-            <p class="lead">支持多文件导入、自动编号、手动修改和 ZIP 导出。</p>
-          </div>
-        </section>
-
+      <main class="workspace-main">
         <section class="surface stack">
           <div class="grid-2">
             <div class="field">
@@ -62,11 +50,6 @@
           </table>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Rename 工具页</span>
-        <span>© <span data-year></span> 把零散文件整理成更顺眼的样子</span>
-      </footer>
     </div>
   </body>
 </html>

@@ -1,8 +1,12 @@
 import type {
   AudioPreference,
   CountdownState,
+  CreativeBoardProject,
+  CreativeDoc,
   FocusState,
   KanbanBoard,
+  MermaidSnippet,
+  MindMapProject,
   QuickLink,
   ScheduleItem,
   ThemePreference,
@@ -19,6 +23,15 @@ const keys = {
   countdown: "yusnote.countdown",
   focus: "yusnote.focus",
   audio: "yusnote.audio"
+} as const;
+
+const creativeDbName = "yusnote-creative";
+const creativeDbVersion = 1;
+const creativeStores = {
+  docs: "docs",
+  boards: "boards",
+  mindmaps: "mindmaps",
+  mermaids: "mermaids"
 } as const;
 
 const defaultQuickLinks: QuickLink[] = [
@@ -47,7 +60,7 @@ const defaultQuickLinks: QuickLink[] = [
 
 const defaultCountdown: CountdownState = {
   id: uid("countdown"),
-  title: "下一次见面",
+  title: "下次见面",
   targetAt: `${todayIso()}T22:00`
 };
 
@@ -72,7 +85,8 @@ const defaultAudioPreference: AudioPreference = {
   volume: 0.55,
   muted: false,
   effectsEnabled: true,
-  activated: false
+  activated: false,
+  collapsed: true
 };
 
 function readJson<T>(key: string, fallback: T): T {
@@ -179,4 +193,126 @@ export function getAudioPreference(): AudioPreference {
 
 export function saveAudioPreference(state: AudioPreference): void {
   writeJson(keys.audio, state);
+}
+
+let creativeDbPromise: Promise<IDBDatabase> | null = null;
+
+function openCreativeDb(): Promise<IDBDatabase> {
+  if (creativeDbPromise) return creativeDbPromise;
+
+  creativeDbPromise = new Promise((resolve, reject) => {
+    const request = window.indexedDB.open(creativeDbName, creativeDbVersion);
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      Object.values(creativeStores).forEach((storeName) => {
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: "id" });
+        }
+      });
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error ?? new Error("Failed to open creative database."));
+  });
+
+  return creativeDbPromise;
+}
+
+async function getStore(storeName: string, mode: IDBTransactionMode): Promise<IDBObjectStore> {
+  const db = await openCreativeDb();
+  return db.transaction(storeName, mode).objectStore(storeName);
+}
+
+function requestToPromise<T>(request: IDBRequest<T>): Promise<T> {
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error ?? new Error("IndexedDB request failed."));
+  });
+}
+
+async function listRecords<T>(storeName: string): Promise<T[]> {
+  const store = await getStore(storeName, "readonly");
+  const result = await requestToPromise(store.getAll());
+  return (result as T[]).sort((a: any, b: any) => String(b.updatedAt ?? "").localeCompare(String(a.updatedAt ?? "")));
+}
+
+async function saveRecord<T extends { id: string }>(storeName: string, value: T): Promise<T> {
+  const store = await getStore(storeName, "readwrite");
+  await requestToPromise(store.put(value));
+  return value;
+}
+
+async function deleteRecord(storeName: string, id: string): Promise<void> {
+  const store = await getStore(storeName, "readwrite");
+  await requestToPromise(store.delete(id));
+}
+
+async function getRecord<T>(storeName: string, id: string): Promise<T | undefined> {
+  const store = await getStore(storeName, "readonly");
+  return (await requestToPromise(store.get(id))) as T | undefined;
+}
+
+export function listCreativeDocs(): Promise<CreativeDoc[]> {
+  return listRecords<CreativeDoc>(creativeStores.docs);
+}
+
+export function saveCreativeDoc(doc: CreativeDoc): Promise<CreativeDoc> {
+  return saveRecord(creativeStores.docs, doc);
+}
+
+export function getCreativeDoc(id: string): Promise<CreativeDoc | undefined> {
+  return getRecord<CreativeDoc>(creativeStores.docs, id);
+}
+
+export function deleteCreativeDoc(id: string): Promise<void> {
+  return deleteRecord(creativeStores.docs, id);
+}
+
+export function listBoardProjects(): Promise<CreativeBoardProject[]> {
+  return listRecords<CreativeBoardProject>(creativeStores.boards);
+}
+
+export function saveBoardProject(project: CreativeBoardProject): Promise<CreativeBoardProject> {
+  return saveRecord(creativeStores.boards, project);
+}
+
+export function getBoardProject(id: string): Promise<CreativeBoardProject | undefined> {
+  return getRecord<CreativeBoardProject>(creativeStores.boards, id);
+}
+
+export function deleteBoardProject(id: string): Promise<void> {
+  return deleteRecord(creativeStores.boards, id);
+}
+
+export function listMindMapProjects(): Promise<MindMapProject[]> {
+  return listRecords<MindMapProject>(creativeStores.mindmaps);
+}
+
+export function saveMindMapProject(project: MindMapProject): Promise<MindMapProject> {
+  return saveRecord(creativeStores.mindmaps, project);
+}
+
+export function getMindMapProject(id: string): Promise<MindMapProject | undefined> {
+  return getRecord<MindMapProject>(creativeStores.mindmaps, id);
+}
+
+export function deleteMindMapProject(id: string): Promise<void> {
+  return deleteRecord(creativeStores.mindmaps, id);
+}
+
+export function listMermaidSnippets(): Promise<MermaidSnippet[]> {
+  return listRecords<MermaidSnippet>(creativeStores.mermaids);
+}
+
+export function saveMermaidSnippet(snippet: MermaidSnippet): Promise<MermaidSnippet> {
+  return saveRecord(creativeStores.mermaids, snippet);
+}
+
+export function getMermaidSnippet(id: string): Promise<MermaidSnippet | undefined> {
+  return getRecord<MermaidSnippet>(creativeStores.mermaids, id);
+}
+
+export function deleteMermaidSnippet(id: string): Promise<void> {
+  return deleteRecord(creativeStores.mermaids, id);
 }

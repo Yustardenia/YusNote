@@ -3,178 +3,93 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌙 YusNote | Night Shelf</title>
+    <title>YusNote | Moonlit Window</title>
     <script type="module" src="./src/pages/home.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Personal Site</span>
-          <span class="brand-title">YusNote</span>
-          <span class="brand-subtitle">Night Shelf</span>
-        </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="./index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./tools/todo.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="./docs/index.html">内容</a>
-          <button class="theme-button" type="button" data-theme-toggle></button>
-        </div>
-      </header>
+    <div class="site-shell home-shell">
+      <main class="home-layout">
+        <aside class="home-sidebar panel">
+          <div class="brand-lockup home-brand">
+            <span class="brand-mark">Personal Site</span>
+            <span class="brand-title">YusNote</span>
+            <span class="brand-subtitle">Moonlit Window</span>
+          </div>
 
-      <main class="page-main">
-        <section class="hero-grid">
-          <article class="panel hero-card">
-            <span class="eyebrow" id="profileSubtitle"></span>
-            <h1 class="hero-title" id="heroTitle"></h1>
-            <p class="hero-note" id="profileIntro" hidden></p>
-            <div class="status-strip" id="statusPills" hidden></div>
-            <div class="split-actions hero-actions">
-              <a class="button" href="./docs/will-of-the-city.html">📡 进入指令页</a>
-              <a class="ghost-button" href="./tools/creative.html">🎨 打开灵感页</a>
+          <button class="theme-button sidebar-theme" type="button" data-theme-toggle></button>
+
+          <section class="sidebar-section">
+            <div class="split-actions">
+              <div class="sidebar-section__title">常驻链接</div>
+              <button class="ghost-button" type="button" id="addQuickLinkButton">新增</button>
             </div>
-            <form class="search-shell" id="searchForm">
-              <select id="engineSelect" aria-label="搜索引擎">
-                <option value="bing">Bing</option>
-                <option value="google">Google</option>
-                <option value="github">GitHub</option>
-                <option value="bilibili">Bilibili</option>
-              </select>
-              <input id="searchInput" type="search" placeholder="搜一首歌、一段资料，或者今天想继续写的东西" />
+            <ul class="list-reset mini-list sidebar-links" id="quickLinksList"></ul>
+          </section>
+        </aside>
+
+        <section class="home-center">
+          <article class="showcase-panel panel">
+            <form class="showcase-search" id="homeSearchForm">
+              <label class="showcase-search__engine">
+                <span class="sr-only">搜索源</span>
+                <select id="homeSearchEngine" aria-label="搜索源"></select>
+              </label>
+              <label class="showcase-search__field">
+                <span class="sr-only">搜索内容</span>
+                <input id="homeSearchQuery" type="search" placeholder="搜资料、找图、找视频，或者今天要继续写的东西" />
+              </label>
               <button class="button" type="submit">开始搜索</button>
             </form>
+
+            <div class="showcase-copy">
+              <span class="eyebrow">Site Window</span>
+              <h1 class="page-heading" id="showcaseTitle"></h1>
+              <div class="showcase-icon-grid" id="showcaseIconGrid"></div>
+            </div>
           </article>
 
-          <aside class="portrait-card">
-            <div class="portrait-card__media">
-              <img id="profileAvatar" alt="" />
-            </div>
-            <div class="portrait-card__meta">
-              <div class="portrait-copy" id="portraitCopy" hidden>
-                <span class="eyebrow eyebrow--small">Current Status</span>
-                <p class="portrait-card__headline" id="profileStatus"></p>
-                <p class="portrait-card__quote" id="profileMoodRow">当前氛围：<span id="profileMood"></span></p>
-              </div>
-              <div class="grid-2">
-                <section class="metric-card">
-                  <div class="metric-label">⏱ 今日专注</div>
-                  <div class="metric-value" id="focusCount">0</div>
-                </section>
-                <section class="metric-card">
-                  <div class="metric-label">🕰 累计时长</div>
-                  <div class="metric-value" id="focusMinutes">0 分钟</div>
-                </section>
+          <article class="instruction-window panel">
+            <div class="instruction-window__toolbar">
+              <img class="instruction-window__icon" id="instructionImage" alt="" />
+              <div class="split-actions">
+                <button class="ghost-button" type="button" id="refreshInstructionButton">刷新</button>
+                <button class="ghost-button" type="button" id="copyInstructionButton">复制</button>
               </div>
             </div>
-          </aside>
-        </section>
-
-        <section class="grid-4">
-          <article class="metric-card">
-            <div class="metric-label">🗒️ 待办数量</div>
-            <div class="metric-value" id="todoCount">0</div>
-          </article>
-          <article class="metric-card">
-            <div class="metric-label">🗓️ 今日日程</div>
-            <div class="metric-value" id="scheduleCount">0</div>
-          </article>
-          <article class="metric-card">
-            <div class="metric-label">🔗 常驻链接</div>
-            <div class="metric-value" id="quickLinkCount">0</div>
-          </article>
-          <article class="metric-card">
-            <div class="metric-label">⏳ 倒计时</div>
-            <div class="metric-value" id="countdownValue">-- : -- : --</div>
-            <p class="card-copy" id="countdownTitle">正在读取目标中...</p>
+            <div class="instruction-window__screen">
+              <p class="instruction-line" id="instructionPrimary"></p>
+            </div>
+            <p class="instruction-disclaimer">虚构文本，请勿执行危害他人的指令。</p>
           </article>
         </section>
 
-        <section class="section-head">
-          <div>
-            <h2 class="section-title">🪟 收藏橱窗</h2>
-          </div>
-        </section>
-        <section class="shelf-grid" id="collectionGrid"></section>
-
-        <section class="preview-grid">
-          <article class="surface">
+        <aside class="home-daily">
+          <article class="surface daily-panel">
             <div class="split-actions">
-              <div>
-                <div class="label">🔗 常驻链接</div>
-              </div>
-              <button class="button" type="button" id="addQuickLinkButton">新增链接</button>
+              <div class="daily-title">📌 待办</div>
+              <a class="ghost-button" href="./tools/todo.html">打开</a>
             </div>
-            <ul class="list-reset mini-list" id="quickLinksList" style="margin-top: 16px"></ul>
+            <ul class="list-reset mini-list" id="todoPreview"></ul>
           </article>
 
-          <article class="surface">
+          <article class="surface daily-panel">
             <div class="split-actions">
-              <div>
-                <div class="label">⏳ 当前倒计时</div>
-              </div>
-              <button class="ghost-button" type="button" id="editCountdownButton">编辑倒计时</button>
+              <div class="daily-title">🗓 今日日程</div>
+              <a class="ghost-button" href="./tools/schedule.html">打开</a>
             </div>
-            <div class="metric-value" style="margin-top: 16px" id="countdownValueMobile">请看上面的时间牌</div>
+            <ul class="list-reset mini-list" id="schedulePreview"></ul>
           </article>
 
-          <article class="surface">
-            <div class="label">📋 看板概览</div>
-            <div class="mini-list" style="margin-top: 16px">
-              <div class="mini-item">
-                <div>
-                  <strong>📝 Backlog</strong>
-                </div>
-                <span class="pill" id="kanbanBacklogMini">0</span>
-              </div>
-              <div class="mini-item">
-                <div>
-                  <strong>⚙️ Doing</strong>
-                </div>
-                <span class="pill" id="kanbanDoingMini">0</span>
-              </div>
-              <div class="mini-item">
-                <div>
-                  <strong>✅ Done</strong>
-                </div>
-                <span class="pill" id="kanbanDoneMini">0</span>
-              </div>
+          <article class="surface daily-panel">
+            <div class="split-actions">
+              <div class="daily-title">⏳ 倒计时</div>
+              <button class="ghost-button" type="button" id="editCountdownButton">编辑</button>
             </div>
+            <div class="metric-value" id="countdownValue">-- : -- : -- : --</div>
+            <p class="card-copy" id="countdownTitle"></p>
           </article>
-        </section>
-
-        <section class="grid-2">
-          <article class="surface">
-            <div class="label">🗒️ 待办预览</div>
-            <ul class="list-reset mini-list" id="todoPreview" style="margin-top: 16px"></ul>
-          </article>
-          <article class="surface">
-            <div class="label">🗓️ 今日安排</div>
-            <ul class="list-reset mini-list" id="schedulePreview" style="margin-top: 16px"></ul>
-          </article>
-        </section>
-
-        <section class="section-head">
-          <div>
-            <h2 class="section-title">🧰 功能入口</h2>
-          </div>
-          <a class="ghost-button" href="./tools/focus.html">打开专注页</a>
-        </section>
-        <section class="dashboard-grid" id="toolGrid"></section>
-
-        <section class="section-head">
-          <div>
-            <h2 class="section-title">📚 作品与手记</h2>
-          </div>
-          <a class="ghost-button" href="./docs/index.html">进入内容页</a>
-        </section>
-        <section class="showcase-grid" id="showcaseGrid"></section>
-        <section class="dashboard-grid" id="docGrid"></section>
+        </aside>
       </main>
-
-      <footer class="site-footer">
-        <span>YusNote</span>
-        <span>&copy; <span data-year></span> Night Shelf</span>
-      </footer>
     </div>
   </body>
 </html>

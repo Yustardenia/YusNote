@@ -18,11 +18,6 @@ export default defineConfig({
         keyword: resolve(__dirname, "tools/keyword.html"),
         divination: resolve(__dirname, "tools/divination.html"),
         game: resolve(__dirname, "tools/game.html"),
-        docs: resolve(__dirname, "docs/index.html"),
-        guide: resolve(__dirname, "docs/guide.html"),
-        unityUi: resolve(__dirname, "docs/unity-ui.html"),
-        audioSystem: resolve(__dirname, "docs/audio-system.html"),
-        willOfTheCity: resolve(__dirname, "docs/will-of-the-city.html"),
         notFound: resolve(__dirname, "404.html")
       }
     }

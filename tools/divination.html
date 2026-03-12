@@ -7,26 +7,22 @@
     <script type="module" src="../src/pages/divination.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">金钱卦</span>
-          <span class="brand-subtitle">保留趣味起卦体验，但改成纯前端推演。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>占卜</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./divination.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
+      <main class="workspace-main">
         <section class="surface" style="max-width: 900px; margin: 0 auto">
           <span class="eyebrow">Divination</span>
           <h1 class="page-heading">起一卦，看看眼下的节奏。</h1>
-          <p class="lead">每次会模拟六次掷钱，得到主卦、动爻和一段偏行动向的提示。</p>
+          <p class="lead">每次会模拟六次掷铜钱，得到主卦、动爻和一段偏行动向的提示。</p>
           <div class="split-actions">
             <button class="button" type="button" id="castGuaButton">开始起卦</button>
           </div>
@@ -39,18 +35,13 @@
               <div class="label">解读</div>
               <div class="stack" style="margin-top: 16px">
                 <strong id="guaName">尚未起卦</strong>
-                <span class="muted" id="guaSummary">点击按钮后开始模拟掷钱。</span>
+                <span class="muted" id="guaSummary">点击按钮后开始模拟掷铜钱。</span>
                 <div class="card-copy" id="guaAdvice"></div>
               </div>
             </article>
           </div>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Divination 工具页</span>
-        <span>© <span data-year></span> 给犹豫的时刻留一点可爱的提示</span>
-      </footer>
     </div>
   </body>
 </html>

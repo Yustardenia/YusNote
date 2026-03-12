@@ -1,4 +1,4 @@
-import { initAppShell } from "../lib/base";
+﻿import { initAppShell } from "../lib/base";
 import { getCountdown, getTodos, saveCountdown, saveTodos } from "../lib/storage";
 import type { TodoItem } from "../lib/types";
 import { formatDateTime, uid } from "../lib/utils";
@@ -54,9 +54,7 @@ function render(): void {
     button.addEventListener("click", () => {
       const id = button.dataset.toggle;
       if (!id) return;
-      saveTodos(
-        getTodos().map((item) => (item.id === id ? { ...item, done: !item.done } : item))
-      );
+      saveTodos(getTodos().map((item) => (item.id === id ? { ...item, done: !item.done } : item)));
       render();
     });
   });
@@ -77,8 +75,7 @@ function render(): void {
       if (!item) return;
       const current = getCountdown();
       const targetAt =
-        window.prompt("截止时间，格式 YYYY-MM-DDTHH:MM", item.dueAt?.slice(0, 16) ?? current.targetAt.slice(0, 16)) ??
-        "";
+        window.prompt("截止时间，格式 YYYY-MM-DDTHH:MM", item.dueAt?.slice(0, 16) ?? current.targetAt.slice(0, 16)) ?? "";
       if (!targetAt) return;
       saveCountdown({
         ...current,

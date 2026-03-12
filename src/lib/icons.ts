@@ -38,7 +38,21 @@ const icons: Record<IconId, string> = {
   heart: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.4-9.4-8.6C.7 9.2 2 5.6 5.3 4.5A5.5 5.5 0 0 1 12 6.3a5.5 5.5 0 0 1 6.7-1.8c3.3 1.1 4.6 4.7 2.7 7.9C19 16.6 12 21 12 21Z"/></svg>`,
   flower: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="2.5"/><path d="M12 5c1.4-2 4.5-2.2 5.7.2 1 2-.2 4.3-2.5 4.8"/><path d="M19 12c2-1.4 2.2-4.5-.2-5.7-2-1-4.3.2-4.8 2.5"/><path d="M12 19c-1.4 2-4.5 2.2-5.7-.2-1-2 .2-4.3 2.5-4.8"/><path d="M5 12c-2 1.4-2.2 4.5.2 5.7 2 1 4.3-.2 4.8-2.5"/></svg>`,
   mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>`,
-  link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14 8 16a3 3 0 0 1-4-4l3-3a3 3 0 0 1 4 0"/><path d="m14 10 2-2a3 3 0 0 1 4 4l-3 3a3 3 0 0 1-4 0"/><path d="m8.5 15.5 7-7"/></svg>`
+  link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14 8 16a3 3 0 0 1-4-4l3-3a3 3 0 0 1 4 0"/><path d="m14 10 2-2a3 3 0 0 1 4 4l-3 3a3 3 0 0 1-4 0"/><path d="m8.5 15.5 7-7"/></svg>`,
+  search: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.2-4.2"/></svg>`,
+  markdown: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m7 15 2.5-4 2.5 4V9"/><path d="m13 9 3 3-3 3"/><path d="M16 15h3"/></svg>`,
+  image: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m21 15-5-5-8 8"/></svg>`,
+  pdf: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v6h5"/><path d="M9 16v-4h1.8a1.2 1.2 0 0 1 0 2.4H9"/><path d="M13 16v-4h1.2a1.8 1.8 0 0 1 0 3.6H13"/><path d="M17 12h-2v4"/><path d="M15 14h1.7"/></svg>`,
+  download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v10"/><path d="m8 10 4 4 4-4"/><path d="M4 19h16"/></svg>`,
+  upload: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20V10"/><path d="m8 14 4-4 4 4"/><path d="M4 5h16"/></svg>`,
+  trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7h12l-1 12H7z"/><path d="M9 4h6l1 3H8z"/></svg>`,
+  duplicate: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="8" width="11" height="11" rx="2"/><rect x="5" y="5" width="11" height="11" rx="2"/></svg>`,
+  mindmap: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="12" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 12h4"/><path d="M14 12V6.5"/><path d="M14 12v5.5"/></svg>`,
+  layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 4 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 16 8 4 8-4"/></svg>`,
+  shape: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="7" rx="1.5"/><circle cx="17" cy="7.5" r="3.5"/><path d="m5 20 5-6 5 6"/></svg>`,
+  type: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16"/><path d="M12 6v12"/><path d="M8 18h8"/></svg>`,
+  note: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v16H6z"/><path d="M9 8h6"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>`,
+  wand: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 20 9-9"/><path d="m12 5 1 2.5L15.5 9 13 10l-1 2.5L11 10 8.5 9 11 7.5Z"/><path d="m17 13 .7 1.7 1.8.7-1.8.7L17 18l-.7-1.9-1.8-.7 1.8-.7Z"/></svg>`
 };
 
 export function renderIcon(iconId: IconId, className = "icon-mark"): string {

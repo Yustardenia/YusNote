@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
@@ -7,99 +7,178 @@
     <script type="module" src="../src/pages/creative.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">Creative Studio</span>
-          <span class="brand-subtitle">把 Markdown、白板和流程图收进同一个灵感角，不用切来切去。</span>
+    <div class="workspace-shell workspace-shell--creative">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>Creative Studio</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./creative.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Creative</span>
-            <h1>做笔记、画草图、画流程。</h1>
-            <p class="lead">这是原“创意工坊”的纯前端版，保留最常用的三种创作模式。</p>
+      <main class="creative-stage-shell">
+        <section class="creative-mode-bar surface">
+          <div class="creative-mode-bar__tabs">
+            <button class="tab-button" type="button" data-creative-tab="markdown" data-active="true">Markdown 笔记</button>
+            <button class="tab-button" type="button" data-creative-tab="board">白板</button>
+            <button class="tab-button" type="button" data-creative-tab="mindmap">思维导图</button>
+            <button class="tab-button" type="button" data-creative-tab="mermaid">Mermaid</button>
           </div>
         </section>
 
-        <section class="surface">
-          <div class="tabs">
-            <button class="tab-button" type="button" data-tab="note" data-active="true">Markdown 笔记</button>
-            <button class="tab-button" type="button" data-tab="draw">白板</button>
-            <button class="tab-button" type="button" data-tab="flow">流程图</button>
-          </div>
-        </section>
-
-        <section class="page-main" id="creativePanels">
-          <article class="surface" data-panel="note">
-            <div class="split-actions">
-              <button class="ghost-button" type="button" data-md-action="h2">插入标题</button>
-              <button class="ghost-button" type="button" data-md-action="list">插入列表</button>
-              <button class="ghost-button" type="button" data-md-action="quote">插入引用</button>
-              <button class="ghost-button" type="button" id="exportMarkdownButton">导出 Markdown</button>
+        <article class="surface creative-screen" data-creative-panel="markdown">
+          <div class="creative-toolbar">
+            <div class="creative-toolbar__group">
+              <button class="ghost-button" type="button" id="createDocButton">新建</button>
+              <button class="ghost-button" type="button" id="renameDocButton">重命名</button>
+              <button class="ghost-button" type="button" id="duplicateDocButton">复制</button>
+              <button class="ghost-button" type="button" id="deleteDocButton">删除</button>
+              <button class="ghost-button" type="button" id="importDocButton">导入 .md</button>
+              <button class="ghost-button" type="button" id="exportDocButton">导出 .md</button>
+              <button class="ghost-button" type="button" id="toggleDocPreviewButton">切换预览</button>
             </div>
-            <div class="grid-2" style="margin-top: 16px">
-              <div class="field">
+            <div class="creative-toolbar__group">
+              <button class="ghost-button" type="button" data-md-insert="h1">H1</button>
+              <button class="ghost-button" type="button" data-md-insert="h2">H2</button>
+              <button class="ghost-button" type="button" data-md-insert="list">列表</button>
+              <button class="ghost-button" type="button" data-md-insert="task">任务</button>
+              <button class="ghost-button" type="button" data-md-insert="quote">引用</button>
+              <button class="ghost-button" type="button" data-md-insert="code">代码</button>
+              <button class="ghost-button" type="button" data-md-insert="table">表格</button>
+              <button class="ghost-button" type="button" data-md-insert="callout">Callout</button>
+              <button class="ghost-button" type="button" data-md-insert="mermaid">Mermaid</button>
+            </div>
+          </div>
+
+          <div class="creative-screen__layout creative-screen__layout--markdown">
+            <aside class="creative-drawer">
+              <div class="field field--compact">
+                <input id="docSearchInput" type="search" placeholder="搜索文档名" />
+              </div>
+              <input id="docImportInput" type="file" accept=".md,text/markdown" hidden />
+              <ul class="list-reset workspace-list" id="docList"></ul>
+            </aside>
+
+            <div class="creative-editor-grid" data-preview-mode="split" id="markdownWorkspace">
+              <div class="field field--grow">
                 <label for="markdownInput">Markdown</label>
-                <textarea id="markdownInput" placeholder="# 今天要推进什么"></textarea>
+                <textarea id="markdownInput" spellcheck="false"></textarea>
               </div>
-              <div class="field">
-                <label>预览</label>
-                <div class="surface" id="markdownPreview"></div>
+              <div class="field field--grow">
+                <label for="markdownPreview">预览</label>
+                <div class="creative-preview" id="markdownPreview"></div>
               </div>
             </div>
-          </article>
+          </div>
+        </article>
 
-          <article class="surface" data-panel="draw" hidden>
-            <div class="split-actions">
-              <input id="drawColor" type="color" value="#c45d3f" />
-              <input id="drawSize" type="range" min="2" max="24" value="6" />
-              <button class="ghost-button" type="button" id="drawPenButton">画笔</button>
-              <button class="ghost-button" type="button" id="drawEraserButton">橡皮</button>
-              <button class="ghost-button" type="button" id="clearCanvasButton">清空</button>
-              <button class="ghost-button" type="button" id="exportCanvasButton">导出 PNG</button>
+        <article class="surface creative-screen" data-creative-panel="board" hidden>
+          <div class="creative-toolbar">
+            <div class="creative-toolbar__group">
+              <button class="ghost-button" type="button" data-board-tool="select" data-active="true">选择</button>
+              <button class="ghost-button" type="button" data-board-tool="pen">画笔</button>
+              <button class="ghost-button" type="button" data-board-tool="highlighter">荧光笔</button>
+              <button class="ghost-button" type="button" data-board-tool="eraser">橡皮</button>
+              <button class="ghost-button" type="button" data-board-tool="line">直线</button>
+              <button class="ghost-button" type="button" data-board-tool="rect">矩形</button>
+              <button class="ghost-button" type="button" data-board-tool="ellipse">圆形</button>
+              <button class="ghost-button" type="button" data-board-tool="arrow">箭头</button>
+              <button class="ghost-button" type="button" data-board-tool="text">文字</button>
+              <button class="ghost-button" type="button" data-board-tool="note">便签</button>
             </div>
-            <div class="canvas-shell" style="margin-top: 16px">
-              <canvas id="drawCanvas" width="1100" height="520"></canvas>
+            <div class="creative-toolbar__group">
+              <button class="ghost-button" type="button" id="createBoardProjectButton">新建工程</button>
+              <button class="ghost-button" type="button" id="importBoardImageButton">导入图片</button>
+              <button class="ghost-button" type="button" id="importBoardPdfButton">导入 PDF</button>
+              <button class="ghost-button" type="button" id="importMarkdownCardsButton">导入 Markdown 卡片</button>
+              <button class="ghost-button" type="button" id="sendBoardToMarkdownButton">签入 Markdown</button>
+              <button class="ghost-button" type="button" id="undoBoardButton">撤销</button>
+              <button class="ghost-button" type="button" id="redoBoardButton">重做</button>
+              <button class="ghost-button" type="button" id="clearBoardButton">清空</button>
+              <button class="ghost-button" type="button" id="exportBoardJsonButton">导出 JSON</button>
+              <button class="ghost-button" type="button" id="exportBoardPngButton">导出 PNG</button>
+              <input id="boardColorInput" type="color" value="#d36ea0" />
+              <input id="boardSizeInput" type="range" min="1" max="28" value="5" />
             </div>
-          </article>
+          </div>
 
-          <article class="surface" data-panel="flow" hidden>
-            <div class="split-actions">
-              <button class="ghost-button" type="button" id="loadFlowExampleButton">加载示例</button>
-              <button class="ghost-button" type="button" id="renderFlowButton">渲染</button>
-              <button class="ghost-button" type="button" id="exportFlowButton">导出 SVG</button>
+          <div class="creative-screen__layout creative-screen__layout--board">
+            <aside class="creative-drawer creative-drawer--compact">
+              <ul class="list-reset workspace-list" id="boardProjectList"></ul>
+              <input id="boardImageInput" type="file" accept="image/*" hidden />
+              <input id="boardPdfInput" type="file" accept="application/pdf" hidden />
+            </aside>
+            <div class="board-stage-shell">
+              <div class="board-stage" id="boardStage"></div>
             </div>
-            <div class="grid-2" style="margin-top: 16px">
-              <div class="field">
-                <label for="flowInput">Mermaid 代码</label>
-                <textarea id="flowInput">graph TD
-开始 --> 收集需求
-收集需求 --> 拆分任务
-拆分任务 --> 整理页面气质</textarea>
+          </div>
+        </article>
+
+        <article class="surface creative-screen" data-creative-panel="mindmap" hidden>
+          <div class="creative-toolbar">
+            <div class="creative-toolbar__group">
+              <button class="ghost-button" type="button" id="createMindMapButton">新建脑图</button>
+              <button class="ghost-button" type="button" id="buildMindMapFromDocButton">从 Markdown 生成</button>
+              <button class="ghost-button" type="button" id="addMindMapChildButton">新增子节点</button>
+              <button class="ghost-button" type="button" id="addMindMapSiblingButton">新增同级</button>
+              <button class="ghost-button" type="button" id="renameMindMapNodeButton">重命名</button>
+              <button class="ghost-button" type="button" id="toggleMindMapNodeButton">折叠/展开</button>
+              <button class="ghost-button" type="button" id="deleteMindMapNodeButton">删除节点</button>
+              <button class="ghost-button" type="button" id="exportMindMapJsonButton">导出 JSON</button>
+              <button class="ghost-button" type="button" id="exportMindMapPngButton">导出 SVG</button>
+              <input id="mindMapColorInput" type="color" value="#6e6cff" />
+            </div>
+          </div>
+
+          <div class="creative-screen__layout creative-screen__layout--mindmap">
+            <aside class="creative-drawer creative-drawer--compact">
+              <ul class="list-reset workspace-list" id="mindMapList"></ul>
+            </aside>
+            <div class="mindmap-stage-shell">
+              <svg class="mindmap-stage" id="mindMapStage"></svg>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface creative-screen" data-creative-panel="mermaid" hidden>
+          <div class="creative-toolbar">
+            <div class="creative-toolbar__group">
+              <button class="ghost-button" type="button" id="createMermaidSnippetButton">新建</button>
+              <button class="ghost-button" type="button" id="saveMermaidSnippetButton">保存片段</button>
+              <button class="ghost-button" type="button" id="renderMermaidButton">渲染</button>
+              <button class="ghost-button" type="button" id="exportMermaidSvgButton">导出 SVG</button>
+            </div>
+            <div class="creative-toolbar__group">
+              <button class="ghost-button" type="button" data-mermaid-template="flowchart">流程图</button>
+              <button class="ghost-button" type="button" data-mermaid-template="sequence">时序图</button>
+              <button class="ghost-button" type="button" data-mermaid-template="gantt">甘特图</button>
+              <button class="ghost-button" type="button" data-mermaid-template="state">状态图</button>
+              <button class="ghost-button" type="button" data-mermaid-template="class">类图</button>
+              <button class="ghost-button" type="button" data-mermaid-template="er">ER 图</button>
+              <button class="ghost-button" type="button" data-mermaid-template="journey">Journey</button>
+              <button class="ghost-button" type="button" data-mermaid-template="mindmap">Mindmap</button>
+            </div>
+          </div>
+
+          <div class="creative-screen__layout creative-screen__layout--mermaid">
+            <aside class="creative-drawer creative-drawer--compact">
+              <ul class="list-reset workspace-list" id="mermaidSnippetList"></ul>
+            </aside>
+            <div class="creative-editor-grid">
+              <div class="field field--grow">
+                <label for="mermaidInput">Mermaid 代码</label>
+                <textarea id="mermaidInput" spellcheck="false"></textarea>
               </div>
-              <div class="field">
-                <label>渲染预览</label>
-                <div class="surface" id="flowPreview"></div>
+              <div class="field field--grow">
+                <label for="mermaidPreview">预览</label>
+                <div class="creative-preview" id="mermaidPreview"></div>
               </div>
             </div>
-          </article>
-        </section>
+          </div>
+        </article>
       </main>
-
-      <footer class="site-footer">
-        <span>Creative 工具页</span>
-        <span>© <span data-year></span> 留给灵感、草图和夜里临时起意的想法</span>
-      </footer>
     </div>
   </body>
 </html>

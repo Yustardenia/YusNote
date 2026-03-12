@@ -1,4 +1,4 @@
-import { initAppShell } from "../lib/base";
+﻿import { initAppShell } from "../lib/base";
 import { getSchedule, saveSchedule } from "../lib/storage";
 import type { ScheduleItem } from "../lib/types";
 import { statusLabel, todayIso, uid } from "../lib/utils";
@@ -96,9 +96,7 @@ form?.addEventListener("submit", (event) => {
 
   if (!next.title) return;
   const items = getSchedule();
-  const updated = editingId
-    ? items.map((item) => (item.id === editingId ? next : item))
-    : [next, ...items];
+  const updated = editingId ? items.map((item) => (item.id === editingId ? next : item)) : [next, ...items];
   saveSchedule(updated);
   editingId = null;
   form.reset();

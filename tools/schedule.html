@@ -7,30 +7,18 @@
     <script type="module" src="../src/pages/schedule.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">时间安排</span>
-          <span class="brand-subtitle">按日期管理日程，保留状态与备注。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>日程</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./schedule.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Schedule</span>
-            <h1>给一天排一个清晰轮廓。</h1>
-            <p class="lead">默认按当天过滤，支持编辑和删除。所有安排直接写入本地存储。</p>
-          </div>
-        </section>
-
+      <main class="workspace-main">
         <section class="two-column">
           <article class="surface">
             <form class="form-grid" id="scheduleForm">
@@ -56,7 +44,7 @@
                   <option value="planned">还没开始</option>
                   <option value="doing">正在进行</option>
                   <option value="done">已经完成</option>
-                  <option value="skipped">今天算了</option>
+                  <option value="skipped">暂时搁置</option>
                 </select>
               </div>
               <div class="field">
@@ -65,7 +53,7 @@
               </div>
               <div class="field">
                 <label for="note">备注</label>
-                <textarea id="note" name="note" placeholder="写一点上下文、提醒或者临时变动"></textarea>
+                <textarea id="note" name="note" placeholder="写一点上下文、提醒或临时变动"></textarea>
               </div>
               <div class="split-actions">
                 <button class="button" type="submit" id="saveScheduleButton">保存安排</button>
@@ -80,11 +68,6 @@
           </article>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Schedule 工具页</span>
-        <span>© <span data-year></span> 让一天的节奏排得更舒服一点</span>
-      </footer>
     </div>
   </body>
 </html>

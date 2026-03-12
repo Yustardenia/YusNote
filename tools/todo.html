@@ -7,30 +7,18 @@
     <script type="module" src="../src/pages/todo.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">Todo 清单</span>
-          <span class="brand-subtitle">快速记录、完成、删除，并可同步到首页倒计时。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>Todo</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./todo.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Checklist</span>
-            <h1>把今天的事写清楚。</h1>
-            <p class="lead">把今天的计划写进这页就好，待办、完成状态和倒计时会一直跟着你留在浏览器里。</p>
-          </div>
-        </section>
-
+      <main class="workspace-main">
         <section class="two-column">
           <article class="surface">
             <form class="form-grid" id="todoForm">
@@ -50,7 +38,7 @@
           </article>
 
           <article class="surface stack">
-            <div class="label">快速过滤</div>
+            <div class="label">快速筛选</div>
             <div class="split-actions">
               <button class="ghost-button" data-filter="all" type="button">全部</button>
               <button class="ghost-button" data-filter="open" type="button">未完成</button>
@@ -65,11 +53,6 @@
           <ul class="list-reset mini-list" id="todoList" style="margin-top: 16px"></ul>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Todo 工具页</span>
-        <span>© <span data-year></span> 先把想做的事轻轻放好</span>
-      </footer>
     </div>
   </body>
 </html>

@@ -3,34 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>目录比对 | YusNote</title>
+    <title>目录对比 | YusNote</title>
     <script type="module" src="../src/pages/compare.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">目录比对</span>
-          <span class="brand-subtitle">浏览器里完成目录分析，适合整理重复文件。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>目录对比</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./compare.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Compare</span>
-            <h1>先比较，再决定删什么。</h1>
-            <p class="lead">默认忽略扩展名，只比对根目录之后的相对路径与文件名主体。</p>
-          </div>
-        </section>
-
+      <main class="workspace-main">
         <section class="grid-2">
           <article class="surface">
             <div class="field">
@@ -40,7 +28,7 @@
           </article>
           <article class="surface">
             <div class="field">
-              <label for="folderB">目录 B（参照）</label>
+              <label for="folderB">目录 B（参考）</label>
               <input id="folderB" type="file" webkitdirectory directory multiple />
             </div>
           </article>
@@ -48,7 +36,7 @@
 
         <section class="surface stack">
           <div class="split-actions">
-            <button class="button" type="button" id="compareButton">开始比对</button>
+            <button class="button" type="button" id="compareButton">开始对比</button>
             <button class="ghost-button" type="button" id="copyCommandButton">复制删除命令</button>
           </div>
           <div class="grid-3">
@@ -56,7 +44,7 @@
             <div class="metric-card"><div class="metric-label">共有</div><div class="metric-value" id="matchCount">0</div></div>
             <div class="metric-card"><div class="metric-label">B 独有</div><div class="metric-value" id="onlyBCount">0</div></div>
           </div>
-          <textarea id="commandOutput" placeholder="比对后会在这里生成 PowerShell 删除命令"></textarea>
+          <textarea id="commandOutput" placeholder="对比后会在这里生成 PowerShell 删除命令"></textarea>
         </section>
 
         <section class="table-shell">
@@ -72,11 +60,6 @@
           </table>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Compare 工具页</span>
-        <span>© <span data-year></span> 在动手删除前先看清楚</span>
-      </footer>
     </div>
   </body>
 </html>

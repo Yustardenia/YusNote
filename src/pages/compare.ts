@@ -1,4 +1,4 @@
-import { initAppShell } from "../lib/base";
+﻿import { initAppShell } from "../lib/base";
 import "../styles/global.css";
 
 initAppShell("tools");
@@ -15,7 +15,6 @@ const body = document.querySelector<HTMLTableSectionElement>("#compareTableBody"
 const commandOutput = document.querySelector<HTMLTextAreaElement>("#commandOutput");
 
 let lastResults: ResultRow[] = [];
-let filesA: File[] = [];
 
 function normalizedKey(file: File): string {
   const relative = (file as File & { webkitRelativePath?: string }).webkitRelativePath ?? file.name;
@@ -33,14 +32,13 @@ function renderResults(): void {
   if (!body) return;
   body.innerHTML = "";
   if (lastResults.length === 0) {
-    body.innerHTML = `<tr><td colspan="3"><div class="empty-state">还没有比对结果。</div></td></tr>`;
+    body.innerHTML = `<tr><td colspan="3"><div class="empty-state">还没有对比结果。</div></td></tr>`;
     return;
   }
 
   lastResults.forEach((result) => {
     const row = document.createElement("tr");
-    const label =
-      result.status === "match" ? "共有" : result.status === "only-a" ? "A 独有" : "B 独有";
+    const label = result.status === "match" ? "共有" : result.status === "only-a" ? "A 独有" : "B 独有";
     row.innerHTML = `
       <td>${result.path}</td>
       <td>${label}</td>
@@ -57,7 +55,6 @@ function renderResults(): void {
 document.querySelector<HTMLButtonElement>("#compareButton")?.addEventListener("click", () => {
   const listA = Array.from(folderA?.files ?? []);
   const listB = Array.from(folderB?.files ?? []);
-  filesA = listA;
   if (listA.length === 0 || listB.length === 0) {
     window.alert("请先选择两个目录。");
     return;

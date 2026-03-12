@@ -7,30 +7,18 @@
     <script type="module" src="../src/pages/kanban.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">看板</span>
-          <span class="brand-subtitle">拖拽任务流转，继续保留 backlog / doing / done 结构。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>看板</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./kanban.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div>
-            <span class="eyebrow">Kanban</span>
-            <h1>让任务真的流动起来。</h1>
-            <p class="lead">拖拽、编辑、删除和设置倒计时都还在，让任务像纸片一样慢慢从左侧流到右侧。</p>
-          </div>
-        </section>
-
+      <main class="workspace-main">
         <section class="grid-3" id="kanbanBoard">
           <article class="surface" data-column="backlog">
             <div class="split-actions">
@@ -66,11 +54,6 @@
           </article>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Kanban 工具页</span>
-        <span>© <span data-year></span> 让任务顺着自己的节奏流动</span>
-      </footer>
     </div>
   </body>
 </html>

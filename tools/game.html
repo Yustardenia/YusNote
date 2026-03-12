@@ -7,22 +7,18 @@
     <script type="module" src="../src/pages/game.ts"></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <div class="brand-lockup">
-          <span class="brand-mark">Tool</span>
-          <span class="brand-title">Cyber Dash</span>
-          <span class="brand-subtitle">一个不依赖背景音乐和跨页广播的轻量小游戏。</span>
+    <div class="workspace-shell">
+      <header class="workspace-topbar">
+        <div class="workspace-topbar__title">
+          <a class="workspace-link" href="../index.html">返回首页</a>
+          <strong>Cyber Dash</strong>
         </div>
-        <div class="nav-row">
-          <a class="nav-chip" data-nav="home" href="../index.html">首页</a>
-          <a class="nav-chip" data-nav="tools" href="./game.html">工具</a>
-          <a class="nav-chip" data-nav="docs" href="../docs/index.html">内容</a>
+        <div class="workspace-topbar__actions">
           <button class="theme-button" type="button" data-theme-toggle></button>
         </div>
       </header>
 
-      <main class="page-main">
+      <main class="workspace-main">
         <section class="surface stack">
           <div class="split-actions">
             <div>
@@ -41,11 +37,6 @@
           <p class="card-copy">移动鼠标或手指控制蓝色核心，避开红色方块，吃掉绿色数据点。</p>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <span>Game 工具页</span>
-        <span>© <span data-year></span> 偶尔抬头去游戏角松一下</span>
-      </footer>
     </div>
   </body>
 </html>
