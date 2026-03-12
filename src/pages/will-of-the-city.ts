@@ -1,4 +1,5 @@
 import { initAppShell } from "../lib/base";
+import { playInstructionSignal } from "../lib/audio";
 import "../styles/global.css";
 
 initAppShell("docs");
@@ -154,10 +155,13 @@ function renderTags(items: string[]): void {
   tagsNode.innerHTML = items.map((tag) => `<span class="tag-chip">📎 ${tag}</span>`).join("");
 }
 
-function renderEntry(entry: InstructionEntry): void {
+function renderEntry(entry: InstructionEntry, withSignal = false): void {
   if (typeNode) typeNode.textContent = entry.type;
   if (footerNode) footerNode.textContent = entry.footer;
   renderTags(entry.tags);
+  if (withSignal) {
+    void playInstructionSignal();
+  }
   scrambleTo(primaryNode, entry.primary, 16);
   window.setTimeout(() => scrambleTo(secondaryNode, entry.secondary, 14), 220);
 }
@@ -180,7 +184,7 @@ function syncSidebarState(forceDesktop = false): void {
 }
 
 generateButton?.addEventListener("click", () => {
-  renderEntry(buildEntry());
+  renderEntry(buildEntry(), true);
 });
 
 copyButton?.addEventListener("click", async () => {

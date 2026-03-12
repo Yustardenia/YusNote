@@ -5,6 +5,7 @@ import { clamp } from "./utils";
 
 let bgmAudio: HTMLAudioElement | null = null;
 let dock: HTMLElement | null = null;
+let synthContext: AudioContext | null = null;
 
 function readPreference() {
   return getAudioPreference();
@@ -54,9 +55,9 @@ function updateDock(): void {
   const effectLabel = pref.effectsEnabled ? "音效开" : "音效关";
 
   dock.querySelector<HTMLElement>("[data-audio-title]")!.textContent = track.title;
-  dock.querySelector<HTMLElement>("[data-audio-copy]")!.textContent = pref.activated
-    ? track.copy
-    : "点击播放后，背景音乐和页面音效才会被唤醒。";
+  const copyNode = dock.querySelector<HTMLElement>("[data-audio-copy]")!;
+  copyNode.textContent = pref.activated ? track.copy : "";
+  copyNode.hidden = !copyNode.textContent.trim();
   dock.querySelector<HTMLInputElement>("[data-audio-volume]")!.value = String(
     Math.round(pref.volume * 100)
   );
@@ -82,7 +83,7 @@ export function mountAudioDock(): void {
   dock.className = "audio-dock";
   dock.innerHTML = `
     <div class="audio-dock__meta">
-      <span class="eyebrow eyebrow--small">${renderIcon("music", "eyebrow-icon")}Audio Room</span>
+      <span class="eyebrow eyebrow--small">${renderIcon("music", "eyebrow-icon")}BGM</span>
       <strong data-audio-title></strong>
       <p data-audio-copy></p>
     </div>
@@ -201,4 +202,46 @@ export function playEffect(kind: keyof typeof effectTracks): void {
   const sound = new Audio(effectTracks[kind]);
   sound.volume = clamp(pref.volume * 0.8, 0, 1);
   void sound.play().catch(() => undefined);
+}
+
+function ensureSynthContext(): AudioContext | null {
+  if (typeof window === "undefined") return null;
+  const AudioCtor = window.AudioContext ?? (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!AudioCtor) return null;
+  if (!synthContext) synthContext = new AudioCtor();
+  return synthContext;
+}
+
+export async function playInstructionSignal(): Promise<void> {
+  const pref = readPreference();
+  if (!pref.activated || pref.muted || !pref.effectsEnabled) return;
+
+  const context = ensureSynthContext();
+  if (!context) return;
+
+  if (context.state === "suspended") {
+    await context.resume().catch(() => undefined);
+  }
+
+  const startAt = context.currentTime + 0.02;
+  const notes = [880, 1174, 988, 1318];
+  notes.forEach((frequency, index) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    const noteStart = startAt + index * 0.11;
+    const noteEnd = noteStart + 0.08;
+    const peak = clamp(pref.volume * 0.05, 0.01, 0.08);
+
+    oscillator.type = "square";
+    oscillator.frequency.setValueAtTime(frequency, noteStart);
+
+    gain.gain.setValueAtTime(0.0001, noteStart);
+    gain.gain.exponentialRampToValueAtTime(peak, noteStart + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, noteEnd);
+
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(noteStart);
+    oscillator.stop(noteEnd + 0.01);
+  });
 }

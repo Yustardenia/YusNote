@@ -19,9 +19,9 @@ if (grid) {
               ${renderIcon(card.iconId, "card-lead-icon")}
               <h3 class="card-title">${card.title}</h3>
             </div>
-            <p class="card-copy">${card.copy}</p>
+            ${card.copy ? `<p class="card-copy">${card.copy}</p>` : ""}
             <div class="card-tags">${card.tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}</div>
-            <span class="card-footer">${card.footer}</span>
+            ${card.footer ? `<span class="card-footer">${card.footer}</span>` : ""}
           </div>
         </a>
       `

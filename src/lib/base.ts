@@ -16,24 +16,35 @@ const navLabels = {
   docs: "内容"
 } as const;
 
-const pageTitles: Array<[RegExp, string]> = [
-  [/\/$/, "YusNote | Night Shelf"],
-  [/index\.html$/i, "YusNote | Night Shelf"],
-  [/tools\/todo\.html$/i, "Todo 清单 | YusNote"],
-  [/tools\/schedule\.html$/i, "时间安排 | YusNote"],
-  [/tools\/kanban\.html$/i, "看板 | YusNote"],
-  [/tools\/focus\.html$/i, "Pomodoro | YusNote"],
-  [/tools\/creative\.html$/i, "Creative Studio | YusNote"],
-  [/tools\/compare\.html$/i, "目录比对 | YusNote"],
-  [/tools\/rename\.html$/i, "批量重命名 | YusNote"],
-  [/tools\/keyword\.html$/i, "关键词卡片 | YusNote"],
-  [/tools\/divination\.html$/i, "投币占卜 | YusNote"],
-  [/tools\/game\.html$/i, "Cyber Dash | YusNote"],
-  [/docs\/index\.html$/i, "内容页 | YusNote"],
-  [/docs\/guide\.html$/i, "Yus 开发总览 | YusNote"],
-  [/docs\/unity-ui\.html$/i, "Unity UI 体系 | YusNote"],
-  [/docs\/audio-system\.html$/i, "全局音频系统 | YusNote"],
-  [/docs\/will-of-the-city\.html$/i, "指令 | YusNote"]
+const homeChrome: RouteChrome = {
+  pattern: /(?:\/|\/index\.html)$/i,
+  title: "YusNote | Moonlit Shelf",
+  brandTitle: "YusNote"
+};
+
+interface RouteChrome {
+  pattern: RegExp;
+  title: string;
+  brandTitle: string;
+  pageHeading?: string;
+}
+
+const routeChrome: RouteChrome[] = [
+  { pattern: /tools\/todo\.html$/i, title: "Todo 清单 | YusNote", brandTitle: "Todo 清单", pageHeading: "Todo 清单" },
+  { pattern: /tools\/schedule\.html$/i, title: "时间安排 | YusNote", brandTitle: "时间安排", pageHeading: "时间安排" },
+  { pattern: /tools\/kanban\.html$/i, title: "看板 | YusNote", brandTitle: "看板", pageHeading: "看板" },
+  { pattern: /tools\/focus\.html$/i, title: "Pomodoro | YusNote", brandTitle: "Pomodoro", pageHeading: "Pomodoro" },
+  { pattern: /tools\/creative\.html$/i, title: "Creative Studio | YusNote", brandTitle: "Creative Studio", pageHeading: "Creative Studio" },
+  { pattern: /tools\/compare\.html$/i, title: "目录比对 | YusNote", brandTitle: "目录比对", pageHeading: "目录比对" },
+  { pattern: /tools\/rename\.html$/i, title: "批量重命名 | YusNote", brandTitle: "批量重命名", pageHeading: "批量重命名" },
+  { pattern: /tools\/keyword\.html$/i, title: "关键词卡片 | YusNote", brandTitle: "关键词卡片", pageHeading: "关键词卡片" },
+  { pattern: /tools\/divination\.html$/i, title: "投币占卜 | YusNote", brandTitle: "投币占卜", pageHeading: "投币占卜" },
+  { pattern: /tools\/game\.html$/i, title: "Cyber Dash | YusNote", brandTitle: "Cyber Dash", pageHeading: "Cyber Dash" },
+  { pattern: /docs\/index\.html$/i, title: "内容 | YusNote", brandTitle: "内容", pageHeading: "📚 书架" },
+  { pattern: /docs\/guide\.html$/i, title: "Yus 开发总览 | YusNote", brandTitle: "Yus 开发总览" },
+  { pattern: /docs\/unity-ui\.html$/i, title: "Unity UI 体系 | YusNote", brandTitle: "Unity UI 体系" },
+  { pattern: /docs\/audio-system\.html$/i, title: "全局音频系统 | YusNote", brandTitle: "全局音频系统" },
+  { pattern: /docs\/will-of-the-city\.html$/i, title: "指令 | YusNote", brandTitle: "指令", pageHeading: "📡 指令" }
 ];
 
 export function initAppShell(activeSection: "home" | "tools" | "docs"): void {
@@ -41,6 +52,7 @@ export function initAppShell(activeSection: "home" | "tools" | "docs"): void {
   const theme = getTheme();
   root.dataset.theme = theme;
   document.body.dataset.section = activeSection;
+  normalizePageChrome(activeSection);
   ensureFavicon();
   ensureTitlePrefix(activeSection);
   root.style.setProperty("--wallpaper-day", `url("${siteProfile.wallpaperDay}")`);
@@ -83,8 +95,8 @@ function ensureFavicon(): void {
 
 function ensureTitlePrefix(activeSection: "home" | "tools" | "docs"): void {
   const pathname = window.location.pathname;
-  const matched = pageTitles.find(([pattern]) => pattern.test(pathname));
-  const current = (matched?.[1] ?? document.title).replace(/^[🌙🧰📚📡]\s*/, "").trim();
+  const matched = matchRouteChrome(pathname);
+  const current = (matched?.title ?? document.title).replace(/^[🌙🧰📚📡]\s*/, "").trim();
   const prefix = /will-of-the-city\.html$/i.test(pathname)
     ? "📡"
     : activeSection === "home"
@@ -93,6 +105,36 @@ function ensureTitlePrefix(activeSection: "home" | "tools" | "docs"): void {
         ? "🧰"
         : "📚";
   document.title = `${prefix} ${current}`;
+}
+
+function normalizePageChrome(activeSection: "home" | "tools" | "docs"): void {
+  const pathname = window.location.pathname;
+  const matched = matchRouteChrome(pathname);
+  const brandTitle = document.querySelector<HTMLElement>(".brand-title");
+  if (brandTitle && matched?.brandTitle) {
+    brandTitle.textContent = matched.brandTitle;
+  }
+
+  document.querySelectorAll<HTMLElement>(".brand-subtitle, .lead, .hero-note").forEach((node) => {
+    node.textContent = "";
+    node.hidden = true;
+  });
+
+  const pageHeading = document.querySelector<HTMLElement>(".page-hero h1, .page-heading");
+  if (pageHeading && matched?.pageHeading) {
+    pageHeading.textContent = matched.pageHeading;
+  }
+
+  const footer = document.querySelector<HTMLElement>(".site-footer");
+  const footerSpans = footer?.querySelectorAll<HTMLElement>("span");
+  if (footerSpans && footerSpans.length >= 2) {
+    footerSpans[0].textContent = activeSection === "home" ? "YusNote" : matched?.brandTitle ?? "YusNote";
+    footerSpans[1].innerHTML = `&copy; <span data-year></span> YusNote`;
+  }
+}
+
+function matchRouteChrome(pathname: string): RouteChrome | undefined {
+  return routeChrome.find((item) => item.pattern.test(pathname)) ?? (homeChrome.pattern.test(pathname) ? homeChrome : undefined);
 }
 
 function bindButtonSounds(): void {

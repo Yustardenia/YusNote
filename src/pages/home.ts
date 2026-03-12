@@ -44,6 +44,7 @@ function renderStaticProfile(): void {
   const mood = document.querySelector<HTMLElement>("#profileMood");
   const moodRow = document.querySelector<HTMLElement>("#profileMoodRow");
   const avatar = document.querySelector<HTMLImageElement>("#profileAvatar");
+  const hasStatus = Boolean(siteProfile.status.trim() || siteProfile.currentMood.trim());
 
   if (subtitle) {
     subtitle.textContent = siteProfile.subtitle;
@@ -54,12 +55,14 @@ function renderStaticProfile(): void {
     intro.textContent = siteProfile.intro;
     intro.hidden = !siteProfile.intro.trim();
   }
+  if (portraitCopy) {
+    if (!hasStatus) {
+      portraitCopy.remove();
+    }
+  }
   if (status) status.textContent = siteProfile.status;
   if (mood) mood.textContent = siteProfile.currentMood;
   if (moodRow) moodRow.hidden = !siteProfile.currentMood.trim();
-  if (portraitCopy) {
-    portraitCopy.hidden = !(siteProfile.status.trim() || siteProfile.currentMood.trim());
-  }
   if (avatar) {
     avatar.src = siteProfile.avatarAsset;
     avatar.alt = `${siteProfile.name} 头像`;
@@ -89,9 +92,9 @@ function cardMarkup(card: {
           ${renderIcon(card.iconId, "card-lead-icon")}
           <h3 class="card-title">${card.title}</h3>
         </div>
-        <p class="card-copy">${card.copy}</p>
+        ${card.copy ? `<p class="card-copy">${card.copy}</p>` : ""}
         <div class="card-tags">${card.tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}</div>
-        <span class="card-footer">${card.footer}</span>
+        ${card.footer ? `<span class="card-footer">${card.footer}</span>` : ""}
       </div>
     </a>
   `;
@@ -109,7 +112,7 @@ function renderCards(): void {
                 ${renderIcon(item.iconId, "card-lead-icon")}
                 <h3 class="card-title">${item.title}</h3>
               </div>
-              <p class="card-copy">${item.description}</p>
+              ${item.description ? `<p class="card-copy">${item.description}</p>` : ""}
               <div class="card-tags">${item.tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}</div>
             </div>
           </a>
@@ -129,8 +132,8 @@ function renderCards(): void {
                 ${renderIcon(item.iconId, "card-lead-icon")}
                 <h3 class="card-title">${item.title}</h3>
               </div>
-              <p class="card-copy">${item.description}</p>
-              <span class="card-footer">${item.footer}</span>
+              ${item.description ? `<p class="card-copy">${item.description}</p>` : ""}
+              ${item.footer ? `<span class="card-footer">${item.footer}</span>` : ""}
             </div>
           </a>
         `

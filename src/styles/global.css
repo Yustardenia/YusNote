@@ -50,9 +50,9 @@ body {
   color: var(--text);
   font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(255, 220, 238, 0.55), transparent 34%),
-    radial-gradient(circle at right center, rgba(122, 141, 246, 0.18), transparent 32%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 30%),
+    radial-gradient(circle at top left, rgba(255, 220, 238, 0.52), transparent 34%),
+    radial-gradient(circle at right center, rgba(122, 141, 246, 0.24), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 30%),
     var(--bg);
   position: relative;
 }
@@ -67,9 +67,10 @@ body::after {
 
 body::before {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0)),
+    linear-gradient(180deg, rgba(255, 251, 255, 0.22), rgba(255, 255, 255, 0.04) 28%, rgba(255, 255, 255, 0)),
+    linear-gradient(135deg, rgba(22, 16, 40, 0.12), rgba(255, 255, 255, 0)),
     var(--page-wallpaper) center/cover no-repeat;
-  opacity: 0.38;
+  opacity: 0.56;
 }
 
 body::after {
@@ -102,7 +103,7 @@ textarea {
 .site-shell {
   position: relative;
   z-index: 1;
-  width: min(1220px, calc(100% - 32px));
+  width: min(1280px, calc(100% - 32px));
   margin: 0 auto;
   padding: 20px 0 104px;
 }
@@ -270,13 +271,13 @@ textarea {
 .docs-layout {
   margin-top: 22px;
   display: grid;
-  gap: 20px;
+  gap: 24px;
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.85fr);
-  gap: 18px;
+  grid-template-columns: minmax(0, 1.38fr) minmax(320px, 0.8fr);
+  gap: 22px;
 }
 
 .panel,
@@ -357,10 +358,41 @@ textarea {
 .hero-card {
   position: relative;
   overflow: hidden;
+  min-height: 360px;
+  padding: 28px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08)),
+    linear-gradient(160deg, rgba(255, 223, 241, 0.26), rgba(122, 141, 246, 0.08)),
+    var(--bg-card);
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 214, 241, 0.46), transparent 18%),
+    radial-gradient(circle at 12% 84%, rgba(127, 152, 255, 0.18), transparent 22%);
+  pointer-events: none;
+}
+
+.hero-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-card .hero-title {
   margin-bottom: 0;
+  max-width: 7ch;
+}
+
+.hero-card--compact {
+  min-height: 220px;
+  padding: 22px 24px;
+}
+
+.hero-card--compact .page-heading {
+  margin: 0;
 }
 
 .hero-card::after,
@@ -409,7 +441,7 @@ textarea {
   overflow: hidden;
   display: grid;
   gap: 16px;
-  padding: 22px;
+  padding: 18px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.1)), var(--bg-strong);
   border-radius: var(--radius-xl);
   border: 1px solid var(--line);
@@ -425,7 +457,7 @@ textarea {
 
 .portrait-card__media img {
   width: 100%;
-  min-height: 340px;
+  min-height: 400px;
   object-fit: cover;
 }
 
@@ -480,7 +512,7 @@ textarea {
 }
 
 .metric-card {
-  min-height: 144px;
+  min-height: 124px;
 }
 
 .metric-label,
@@ -517,20 +549,21 @@ textarea {
   overflow: hidden;
   padding: 0;
   text-decoration: none;
-  min-height: 260px;
+  min-height: 224px;
   display: grid;
 }
 
 .card-cover {
-  min-height: 136px;
+  min-height: 112px;
   background-position: center;
   background-size: cover;
+  filter: saturate(1.08) contrast(1.04);
 }
 
 .card-body {
   display: grid;
-  gap: 10px;
-  padding: 18px 18px 20px;
+  gap: 8px;
+  padding: 16px 16px 18px;
 }
 
 .card-headline {
@@ -561,6 +594,7 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: auto;
 }
 
 .list-reset {
@@ -622,8 +656,8 @@ textarea {
 }
 
 .quicklink-badge {
-  width: 56px;
-  height: 56px;
+  width: 50px;
+  height: 50px;
   border-radius: 18px;
   display: inline-flex;
   align-items: center;
@@ -754,6 +788,14 @@ textarea:focus {
   border: 1px dashed var(--line);
 }
 
+.brand-subtitle:empty,
+.lead:empty,
+.hero-note:empty,
+.card-copy:empty,
+.card-footer:empty {
+  display: none;
+}
+
 .site-footer {
   margin-top: 24px;
   padding: 16px 22px;
@@ -770,8 +812,8 @@ textarea:focus {
   right: 20px;
   bottom: 20px;
   z-index: 30;
-  width: min(360px, calc(100% - 24px));
-  padding: 16px;
+  width: min(320px, calc(100% - 24px));
+  padding: 14px;
   border-radius: 28px;
   background: rgba(23, 18, 43, 0.82);
   border: 1px solid rgba(255, 228, 246, 0.12);
@@ -789,7 +831,7 @@ textarea:focus {
 
 .audio-dock__meta {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .audio-dock__meta strong {
@@ -805,7 +847,7 @@ textarea:focus {
 
 .audio-dock__actions {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -832,7 +874,7 @@ textarea:focus {
 .city-layout {
   display: grid;
   grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
-  gap: 18px;
+  gap: 22px;
   align-items: start;
 }
 
@@ -882,7 +924,7 @@ textarea:focus {
   align-content: start;
   gap: 14px;
   position: sticky;
-  top: 108px;
+  top: 96px;
 }
 
 .city-sidebar__top {

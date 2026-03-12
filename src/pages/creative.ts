@@ -37,7 +37,7 @@ function renderMarkdown(): void {
 }
 
 if (markdownInput) {
-markdownInput.value = window.localStorage.getItem(markdownKey) ?? "# 今晚想记下的事\n\n- 整理页面氛围\n- 给作品页补一点说明";
+  markdownInput.value = window.localStorage.getItem(markdownKey) ?? "# 今晚想记下的事\n\n- 调整首页排版\n- 继续整理收藏页";
   markdownInput.addEventListener("input", renderMarkdown);
   renderMarkdown();
 }
