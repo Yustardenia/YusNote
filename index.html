@@ -8,86 +8,117 @@
   </head>
   <body>
     <div class="site-shell home-shell">
+      <div class="home-topbar">
+        <button class="ghost-button" type="button" id="toggleAllPanelsButton" aria-pressed="false">全部收起</button>
+      </div>
+
       <main class="home-layout">
-        <aside class="home-sidebar panel">
-          <div class="brand-lockup home-brand">
-            <span class="brand-mark">Personal Site</span>
-            <span class="brand-title">YusNote</span>
-            <span class="brand-subtitle">Moonlit Window</span>
-          </div>
-
-          <button class="theme-button sidebar-theme" type="button" data-theme-toggle></button>
-
-          <section class="sidebar-section">
-            <div class="split-actions">
-              <div class="sidebar-section__title">常驻链接</div>
-              <button class="ghost-button" type="button" id="addQuickLinkButton">新增</button>
+        <aside class="home-sidebar panel" data-home-panel="left">
+          <div class="home-panel-header">
+            <div class="home-panel-heading">
+              <span class="home-panel-kicker">左侧栏</span>
+              <strong>站点与常驻链接</strong>
             </div>
-            <ul class="list-reset mini-list sidebar-links" id="quickLinksList"></ul>
-          </section>
+            <button class="ghost-button home-panel-toggle" type="button" data-panel-toggle="left" aria-expanded="true">收起</button>
+          </div>
+          <div class="home-panel-body">
+            <div class="brand-lockup home-brand">
+              <span class="brand-mark">Personal Site</span>
+              <span class="brand-title">YusNote</span>
+              <span class="brand-subtitle">Moonlit Window</span>
+            </div>
+
+            <button class="theme-button sidebar-theme" type="button" data-theme-toggle></button>
+
+            <section class="sidebar-section">
+              <div class="split-actions">
+                <div class="sidebar-section__title">常驻链接</div>
+                <button class="ghost-button" type="button" id="addQuickLinkButton">新增</button>
+              </div>
+              <ul class="list-reset mini-list sidebar-links" id="quickLinksList"></ul>
+            </section>
+          </div>
         </aside>
 
-        <section class="home-center">
-          <article class="showcase-panel panel">
-            <form class="showcase-search" id="homeSearchForm">
-              <label class="showcase-search__engine">
-                <span class="sr-only">搜索源</span>
-                <select id="homeSearchEngine" aria-label="搜索源"></select>
-              </label>
-              <label class="showcase-search__field">
-                <span class="sr-only">搜索内容</span>
-                <input id="homeSearchQuery" type="search" placeholder="搜资料、找图、找视频，或者今天要继续写的东西" />
-              </label>
-              <button class="button" type="submit">开始搜索</button>
-            </form>
-
-            <div class="showcase-copy">
-              <span class="eyebrow">Site Window</span>
-              <h1 class="page-heading" id="showcaseTitle"></h1>
-              <div class="showcase-icon-grid" id="showcaseIconGrid"></div>
+        <section class="home-center panel" data-home-panel="center">
+          <div class="home-panel-header">
+            <div class="home-panel-heading">
+              <span class="home-panel-kicker">中间橱窗</span>
+              <strong>搜索、入口与指令</strong>
             </div>
-          </article>
+            <button class="ghost-button home-panel-toggle" type="button" data-panel-toggle="center" aria-expanded="true">收起</button>
+          </div>
+          <div class="home-panel-body home-center-body">
+            <article class="showcase-panel">
+              <form class="showcase-search" id="homeSearchForm">
+                <label class="showcase-search__engine">
+                  <span class="sr-only">搜索源</span>
+                  <select id="homeSearchEngine" aria-label="搜索源"></select>
+                </label>
+                <label class="showcase-search__field">
+                  <span class="sr-only">搜索内容</span>
+                  <input id="homeSearchQuery" type="search" placeholder="搜资料、找图、找视频，或者今天要继续写的" />
+                </label>
+                <button class="button" type="submit">开始搜索</button>
+              </form>
 
-          <article class="instruction-window panel">
-            <div class="instruction-window__toolbar">
-              <img class="instruction-window__icon" id="instructionImage" alt="" />
-              <div class="split-actions">
-                <button class="ghost-button" type="button" id="refreshInstructionButton">刷新</button>
-                <button class="ghost-button" type="button" id="copyInstructionButton">复制</button>
+              <div class="showcase-copy">
+                <span class="eyebrow">Site Window</span>
+                <h1 class="page-heading" id="showcaseTitle"></h1>
+                <div class="showcase-icon-grid" id="showcaseIconGrid"></div>
               </div>
-            </div>
-            <div class="instruction-window__screen">
-              <p class="instruction-line" id="instructionPrimary"></p>
-            </div>
-            <p class="instruction-disclaimer">虚构文本，请勿执行危害他人的指令。</p>
-          </article>
+            </article>
+
+            <article class="instruction-window">
+              <div class="instruction-window__toolbar">
+                <img class="instruction-window__icon" id="instructionImage" alt="" />
+                <div class="split-actions">
+                  <button class="ghost-button" type="button" id="refreshInstructionButton">刷新</button>
+                  <button class="ghost-button" type="button" id="copyInstructionButton">复制</button>
+                </div>
+              </div>
+              <div class="instruction-window__screen">
+                <p class="instruction-line" id="instructionPrimary"></p>
+              </div>
+              <p class="instruction-disclaimer">虚构文本，请勿执行危害他人的指令。</p>
+            </article>
+          </div>
         </section>
 
-        <aside class="home-daily">
-          <article class="surface daily-panel">
-            <div class="split-actions">
-              <div class="daily-title">📌 待办</div>
-              <a class="ghost-button" href="./tools/todo.html">打开</a>
+        <aside class="home-daily panel" data-home-panel="right">
+          <div class="home-panel-header">
+            <div class="home-panel-heading">
+              <span class="home-panel-kicker">右侧栏</span>
+              <strong>日常概览</strong>
             </div>
-            <ul class="list-reset mini-list" id="todoPreview"></ul>
-          </article>
+            <button class="ghost-button home-panel-toggle" type="button" data-panel-toggle="right" aria-expanded="true">收起</button>
+          </div>
+          <div class="home-panel-body home-daily-body">
+            <article class="surface daily-panel">
+              <div class="split-actions">
+                <div class="daily-title">📌 待办</div>
+                <a class="ghost-button" href="./tools/todo.html">打开</a>
+              </div>
+              <ul class="list-reset mini-list" id="todoPreview"></ul>
+            </article>
 
-          <article class="surface daily-panel">
-            <div class="split-actions">
-              <div class="daily-title">🗓 今日日程</div>
-              <a class="ghost-button" href="./tools/schedule.html">打开</a>
-            </div>
-            <ul class="list-reset mini-list" id="schedulePreview"></ul>
-          </article>
+            <article class="surface daily-panel">
+              <div class="split-actions">
+                <div class="daily-title">🗓 今日日程</div>
+                <a class="ghost-button" href="./tools/schedule.html">打开</a>
+              </div>
+              <ul class="list-reset mini-list" id="schedulePreview"></ul>
+            </article>
 
-          <article class="surface daily-panel">
-            <div class="split-actions">
-              <div class="daily-title">⏳ 倒计时</div>
-              <button class="ghost-button" type="button" id="editCountdownButton">编辑</button>
-            </div>
-            <div class="metric-value" id="countdownValue">-- : -- : -- : --</div>
-            <p class="card-copy" id="countdownTitle"></p>
-          </article>
+            <article class="surface daily-panel">
+              <div class="split-actions">
+                <div class="daily-title">⏳ 倒计时</div>
+                <button class="ghost-button" type="button" id="editCountdownButton">编辑</button>
+              </div>
+              <div class="metric-value" id="countdownValue">-- : -- : -- : --</div>
+              <p class="card-copy" id="countdownTitle"></p>
+            </article>
+          </div>
         </aside>
       </main>
     </div>

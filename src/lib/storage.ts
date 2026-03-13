@@ -7,6 +7,7 @@ import type {
   KanbanBoard,
   MermaidSnippet,
   MindMapProject,
+  HomePanelState,
   QuickLink,
   ScheduleItem,
   ThemePreference,
@@ -22,7 +23,8 @@ const keys = {
   kanban: "yusnote.kanban",
   countdown: "yusnote.countdown",
   focus: "yusnote.focus",
-  audio: "yusnote.audio"
+  audio: "yusnote.audio",
+  homePanels: "yusnote.home-panels"
 } as const;
 
 const creativeDbName = "yusnote-creative";
@@ -87,6 +89,12 @@ const defaultAudioPreference: AudioPreference = {
   effectsEnabled: true,
   activated: false,
   collapsed: true
+};
+
+const defaultHomePanelState: HomePanelState = {
+  leftCollapsed: false,
+  centerCollapsed: false,
+  rightCollapsed: false
 };
 
 function readJson<T>(key: string, fallback: T): T {
@@ -193,6 +201,18 @@ export function getAudioPreference(): AudioPreference {
 
 export function saveAudioPreference(state: AudioPreference): void {
   writeJson(keys.audio, state);
+}
+
+export function getHomePanelState(): HomePanelState {
+  const saved = readJson<HomePanelState>(keys.homePanels, defaultHomePanelState);
+  return {
+    ...defaultHomePanelState,
+    ...saved
+  };
+}
+
+export function saveHomePanelState(state: HomePanelState): void {
+  writeJson(keys.homePanels, state);
 }
 
 let creativeDbPromise: Promise<IDBDatabase> | null = null;

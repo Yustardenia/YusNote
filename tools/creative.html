@@ -90,12 +90,17 @@
             </div>
             <div class="creative-toolbar__group">
               <button class="ghost-button" type="button" id="createBoardProjectButton">新建工程</button>
+              <button class="ghost-button" type="button" id="deleteBoardProjectButton">删除工程</button>
               <button class="ghost-button" type="button" id="importBoardImageButton">导入图片</button>
               <button class="ghost-button" type="button" id="importBoardPdfButton">导入 PDF</button>
               <button class="ghost-button" type="button" id="importMarkdownCardsButton">导入 Markdown 卡片</button>
               <button class="ghost-button" type="button" id="sendBoardToMarkdownButton">签入 Markdown</button>
               <button class="ghost-button" type="button" id="undoBoardButton">撤销</button>
               <button class="ghost-button" type="button" id="redoBoardButton">重做</button>
+              <button class="ghost-button" type="button" id="zoomOutBoardButton">缩小</button>
+              <button class="ghost-button" type="button" id="resetBoardZoomButton">100%</button>
+              <button class="ghost-button" type="button" id="zoomInBoardButton">放大</button>
+              <span class="pill" id="boardZoomLabel">100%</span>
               <button class="ghost-button" type="button" id="clearBoardButton">清空</button>
               <button class="ghost-button" type="button" id="exportBoardJsonButton">导出 JSON</button>
               <button class="ghost-button" type="button" id="exportBoardPngButton">导出 PNG</button>
@@ -120,6 +125,7 @@
           <div class="creative-toolbar">
             <div class="creative-toolbar__group">
               <button class="ghost-button" type="button" id="createMindMapButton">新建脑图</button>
+              <button class="ghost-button" type="button" id="deleteMindMapProjectButton">删除脑图</button>
               <button class="ghost-button" type="button" id="buildMindMapFromDocButton">从 Markdown 生成</button>
               <button class="ghost-button" type="button" id="addMindMapChildButton">新增子节点</button>
               <button class="ghost-button" type="button" id="addMindMapSiblingButton">新增同级</button>
@@ -146,6 +152,7 @@
           <div class="creative-toolbar">
             <div class="creative-toolbar__group">
               <button class="ghost-button" type="button" id="createMermaidSnippetButton">新建</button>
+              <button class="ghost-button" type="button" id="deleteMermaidSnippetButton">删除片段</button>
               <button class="ghost-button" type="button" id="saveMermaidSnippetButton">保存片段</button>
               <button class="ghost-button" type="button" id="renderMermaidButton">渲染</button>
               <button class="ghost-button" type="button" id="exportMermaidSvgButton">导出 SVG</button>

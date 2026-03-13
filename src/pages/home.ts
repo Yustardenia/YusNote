@@ -2,8 +2,8 @@
 import { playInstructionSignal, stopInstructionSignal } from "../lib/audio";
 import { buildInstructionEntry, scrambleTo } from "../lib/instruction";
 import { renderIcon } from "../lib/icons";
-import { getCountdown, getQuickLinks, getSchedule, getTodos, saveCountdown, saveQuickLinks } from "../lib/storage";
-import type { IconId, QuickLink, SearchEngine } from "../lib/types";
+import { getCountdown, getHomePanelState, getQuickLinks, getSchedule, getTodos, saveCountdown, saveHomePanelState, saveQuickLinks } from "../lib/storage";
+import type { HomePanelState, IconId, QuickLink, SearchEngine } from "../lib/types";
 import { homeShowcase, homeSidebarLinks, searchEngines, toolCards } from "../data/site";
 import { formatDateTime, statusLabel, todayIso, uid } from "../lib/utils";
 import "../styles/global.css";
@@ -30,9 +30,23 @@ const refreshInstructionButton = document.querySelector<HTMLButtonElement>("#ref
 const searchForm = document.querySelector<HTMLFormElement>("#homeSearchForm");
 const searchEngineSelect = document.querySelector<HTMLSelectElement>("#homeSearchEngine");
 const searchInput = document.querySelector<HTMLInputElement>("#homeSearchQuery");
+const toggleAllPanelsButton = document.querySelector<HTMLButtonElement>("#toggleAllPanelsButton");
+const panelNodes = {
+  left: document.querySelector<HTMLElement>('[data-home-panel="left"]'),
+  center: document.querySelector<HTMLElement>('[data-home-panel="center"]'),
+  right: document.querySelector<HTMLElement>('[data-home-panel="right"]')
+};
+const panelToggleButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-panel-toggle]")];
 
 let isInstructionReading = false;
 let pendingInstructionGestureCleanup: (() => void) | null = null;
+let panelState: HomePanelState = getHomePanelState();
+
+const panelStateMap = {
+  left: "leftCollapsed",
+  center: "centerCollapsed",
+  right: "rightCollapsed"
+} as const;
 
 const searchTargets: Record<SearchEngine, (query: string) => string> = {
   bing: (query) => `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
@@ -49,6 +63,58 @@ function buildShowcaseEntries(): ShowcaseEntry[] {
     entryMap.set(item.href, { href: item.href, label: item.title, iconId: item.iconId });
   });
   return [...entryMap.values()];
+}
+
+function syncPanelState(): void {
+  (Object.keys(panelNodes) as Array<keyof typeof panelStateMap>).forEach((panelKey) => {
+    const collapsed = panelState[panelStateMap[panelKey]];
+    const node = panelNodes[panelKey];
+    if (!node) return;
+    node.dataset.collapsed = collapsed ? "true" : "false";
+  });
+
+  panelToggleButtons.forEach((button) => {
+    const panelKey = button.dataset.panelToggle as keyof typeof panelStateMap | undefined;
+    if (!panelKey) return;
+    const collapsed = panelState[panelStateMap[panelKey]];
+    button.textContent = collapsed ? "展开" : "收起";
+    button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  });
+
+  if (toggleAllPanelsButton) {
+    const allCollapsed = panelState.leftCollapsed && panelState.centerCollapsed && panelState.rightCollapsed;
+    toggleAllPanelsButton.textContent = allCollapsed ? "全部展开" : "全部收起";
+    toggleAllPanelsButton.setAttribute("aria-pressed", allCollapsed ? "true" : "false");
+  }
+}
+
+function saveAndSyncPanels(): void {
+  saveHomePanelState(panelState);
+  syncPanelState();
+}
+
+function mountPanelControls(): void {
+  syncPanelState();
+
+  panelToggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const panelKey = button.dataset.panelToggle as keyof typeof panelStateMap | undefined;
+      if (!panelKey) return;
+      const stateKey = panelStateMap[panelKey];
+      panelState = { ...panelState, [stateKey]: !panelState[stateKey] };
+      saveAndSyncPanels();
+    });
+  });
+
+  toggleAllPanelsButton?.addEventListener("click", () => {
+    const allCollapsed = panelState.leftCollapsed && panelState.centerCollapsed && panelState.rightCollapsed;
+    panelState = {
+      leftCollapsed: !allCollapsed,
+      centerCollapsed: !allCollapsed,
+      rightCollapsed: !allCollapsed
+    };
+    saveAndSyncPanels();
+  });
 }
 
 function renderShowcase(): void {
@@ -208,3 +274,4 @@ renderSchedulePreview();
 mountCountdown();
 mountQuickLinkCreate();
 mountInstructionWidget();
+mountPanelControls();

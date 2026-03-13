@@ -169,6 +169,12 @@ export interface AudioPreference {
   collapsed: boolean;
 }
 
+export interface HomePanelState {
+  leftCollapsed: boolean;
+  centerCollapsed: boolean;
+  rightCollapsed: boolean;
+}
+
 export interface CreativeDoc {
   id: string;
   name: string;
@@ -238,6 +244,12 @@ export interface BoardAssetElement extends BoardBaseElement {
   payload?: string;
 }
 
+export interface BoardViewport {
+  zoom: number;
+  panX: number;
+  panY: number;
+}
+
 export type BoardElement =
   | BoardStrokeElement
   | BoardShapeElement
@@ -248,6 +260,9 @@ export interface CreativeBoardPage {
   id: string;
   name: string;
   elements: BoardElement[];
+  viewport?: BoardViewport;
+  sceneWidth?: number;
+  sceneHeight?: number;
 }
 
 export interface CreativeBoardProject {
