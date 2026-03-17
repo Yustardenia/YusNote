@@ -1531,6 +1531,18 @@ textarea:focus {
   gap: 20px;
 }
 
+.gamejam-title {
+  font-family: "Inter", "STKaiti", "KaiTi", "Times New Roman", serif;
+  letter-spacing: 0.04em;
+}
+
+.gamejam-char {
+  display: inline-block;
+  font-variation-settings: "wght" 200;
+  transition: font-variation-settings 0.08s linear, text-shadow 0.08s linear;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
 .gamejam-card {
   border-radius: var(--radius-xl);
   border: 1px solid var(--line);
@@ -1539,6 +1551,28 @@ textarea:focus {
   display: grid;
   gap: 14px;
   padding: 20px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: gamejamCardIn 420ms ease-out forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.gamejam-card.is-ready {
+  opacity: 1;
+}
+
+.gamejam-cover {
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.4);
+  aspect-ratio: 16 / 9;
+}
+
+.gamejam-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .gamejam-card__head {
@@ -1595,6 +1629,17 @@ textarea:focus {
 .gamejam-link {
   display: flex;
   justify-content: flex-end;
+}
+
+@keyframes gamejamCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .workspace-topbar {

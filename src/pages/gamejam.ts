@@ -16,6 +16,7 @@ interface GameJamEntry {
   repo?: RepoRef;
   link?: string;
   linkLabel?: string;
+  cover?: string;
 }
 
 const entries: GameJamEntry[] = [
@@ -26,7 +27,8 @@ const entries: GameJamEntry[] = [
     genre: "平台跳跃",
     theme: "三个按键",
     description:
-      "小黑球持续向右冲刺，Space 跳跃，Shift 加速，J 反转场景颜色；只有与小球同色的物块才有实体，切色决定能走的路。"
+      "小黑球持续向右冲刺，Space 跳跃，Shift 加速，J 反转场景颜色；只有与小球同色的物块才有实体，切色决定能走的路。",
+    cover: "/assets/gamejam/blackwhite.png"
   },
   {
     title: "触忆",
@@ -36,7 +38,8 @@ const entries: GameJamEntry[] = [
     theme: "伸手 / 回忆感",
     description:
       "在记忆逐渐模糊的世界里，你化身记忆障碍的老奶奶，以“手（鼠标）触碰旧物”唤醒残存片段，在消散边缘寻找温情的回忆。",
-    repo: { owner: "DongyangSpiral", name: "TouchMemories" }
+    repo: { owner: "DongyangSpiral", name: "TouchMemories" },
+    cover: "/assets/gamejam/touchmemory.png"
   },
   {
     title: "你的傲娇四川老婆",
@@ -46,7 +49,8 @@ const entries: GameJamEntry[] = [
     theme: "耙耳朵",
     description:
       "扮演惹老婆生气的耙耳朵，在弹幕中穿梭躲避，同时拾取包包、化妆品等道具降低火气值，把关系拉回安全线。",
-    repo: { owner: "Yustardenia", name: "UnityChinaGameJam-YourSiChuanWife" }
+    repo: { owner: "Yustardenia", name: "UnityChinaGameJam-YourSiChuanWife" },
+    cover: "/assets/gamejam/SiChuanWife.png"
   },
   {
     title: "Stardenia",
@@ -55,7 +59,8 @@ const entries: GameJamEntry[] = [
     genre: "RPG",
     theme: "你确定这不是 BUG 吗？",
     description:
-      "“如果世界不是由二进制构成，该有多好。”作为测试员的你清理那些被标记为“多余”的 Bug —— 你会放过它们吗？"
+      "“如果世界不是由二进制构成，该有多好。”作为测试员的你清理那些被标记为“多余”的 Bug —— 你会放过它们吗？",
+    cover: "/assets/gamejam/Stardenia.png"
     ,
     link: "https://www.taptap.cn/app/779458",
     linkLabel: "TapTap"
@@ -68,7 +73,8 @@ const entries: GameJamEntry[] = [
     theme: "模拟器",
     description:
       "社畜猝死后灵魂附身在自动贩卖机。你要管理补货、定价、投币与出货流程，让这台机器继续运转。",
-    repo: { owner: "Yustardenia", name: "TapTap48hGJ" }
+    repo: { owner: "Yustardenia", name: "TapTap48hGJ" },
+    cover: "/assets/gamejam/machine.png"
   },
   {
     title: "遮见",
@@ -78,7 +84,8 @@ const entries: GameJamEntry[] = [
     theme: "Mask",
     description:
       "一念摘戴，阴阳两隔。偶然的驻足让你困在死寂古宅，红纱覆面时才惊觉——所见是真相，还是被安排的宿命？",
-    repo: { owner: "Yustardenia", name: "GlobalGameJam2026-ObstructedView" }
+    repo: { owner: "Yustardenia", name: "GlobalGameJam2026-ObstructedView" },
+    cover: "/assets/gamejam/Mask.png"
   },
   {
     title: "DOTS",
@@ -88,7 +95,8 @@ const entries: GameJamEntry[] = [
     theme: "Dot",
     description:
       "三人联机卡牌对局，混合 Dot 点数牌与 Effect 效果牌；通过打空手牌或触发胜利条件取胜，回合与全局事件均带随机性。",
-    repo: { owner: "Yustardenia", name: "MengYaGameJam2026-DOTS" }
+    repo: { owner: "Yustardenia", name: "MengYaGameJam2026-DOTS" },
+    cover: "/assets/gamejam/DOTS.png"
   }
 ];
 
@@ -112,8 +120,12 @@ function renderCard(entry: GameJamEntry): string {
         <a class="ghost-button" href="${entry.link}" target="_blank" rel="noreferrer">${escapeHtml(entry.linkLabel ?? "外部链接")}</a>
       </div>`
     : "";
+  const cover = entry.cover
+    ? `<div class="gamejam-cover"><img src="${entry.cover}" alt="${escapeHtml(entry.title)}" loading="lazy" data-cover /></div>`
+    : "";
   return `
     <article class="gamejam-card">
+      ${cover}
       <div class="gamejam-card__head">
         <div>
           <div class="card-kicker">${escapeHtml(entry.jamName)}</div>
@@ -135,6 +147,65 @@ function renderGameJam(): void {
   const grid = document.querySelector<HTMLElement>("#gamejamGrid");
   if (!grid) return;
   grid.innerHTML = entries.map(renderCard).join("");
+  grid.querySelectorAll<HTMLImageElement>("[data-cover]").forEach((image) => {
+    image.addEventListener("error", () => {
+      const wrapper = image.closest(".gamejam-cover");
+      if (wrapper) wrapper.remove();
+    });
+  });
+  grid.querySelectorAll<HTMLElement>(".gamejam-card").forEach((card, index) => {
+    card.style.setProperty("--delay", `${index * 60}ms`);
+    card.classList.add("is-ready");
+  });
 }
 
 renderGameJam();
+
+function mountTitleEffect(): void {
+  const title = document.querySelector<HTMLElement>("#gamejamTitle");
+  if (!title) return;
+  const text = title.textContent ?? "";
+  title.textContent = "";
+  const chars: { element: HTMLSpanElement; x: number; y: number }[] = [];
+  [...text].forEach((char) => {
+    const span = document.createElement("span");
+    span.className = "gamejam-char";
+    span.textContent = char === " " ? "\u00A0" : char;
+    title.appendChild(span);
+    chars.push({ element: span, x: 0, y: 0 });
+  });
+  const updatePositions = () => {
+    chars.forEach((item) => {
+      const rect = item.element.getBoundingClientRect();
+      item.x = rect.left + rect.width / 2;
+      item.y = rect.top + rect.height / 2;
+    });
+  };
+  updatePositions();
+  window.addEventListener("resize", updatePositions);
+  let mouseX = -1000;
+  let mouseY = -1000;
+  document.addEventListener("mousemove", (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+    requestAnimationFrame(() => {
+      chars.forEach((item) => {
+        const dx = mouseX - item.x;
+        const dy = mouseY - item.y;
+        const distance = Math.hypot(dx, dy);
+        const radius = 90;
+        if (distance < radius) {
+          const normalized = 1 - distance / radius;
+          const weight = 200 + normalized * 600;
+          item.element.style.fontVariationSettings = `'wght' ${weight}`;
+          item.element.style.textShadow = `0 0 ${1 + normalized * 6}px rgba(255, 255, 255, 0.85)`;
+        } else {
+          item.element.style.fontVariationSettings = "'wght' 200";
+          item.element.style.textShadow = "0 0 1px rgba(255, 255, 255, 0.8)";
+        }
+      });
+    });
+  });
+}
+
+mountTitleEffect();
