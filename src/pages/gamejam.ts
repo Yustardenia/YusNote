@@ -14,6 +14,8 @@ interface GameJamEntry {
   theme: string;
   description: string;
   repo?: RepoRef;
+  link?: string;
+  linkLabel?: string;
 }
 
 const entries: GameJamEntry[] = [
@@ -54,6 +56,9 @@ const entries: GameJamEntry[] = [
     theme: "你确定这不是 BUG 吗？",
     description:
       "“如果世界不是由二进制构成，该有多好。”作为测试员的你清理那些被标记为“多余”的 Bug —— 你会放过它们吗？"
+    ,
+    link: "https://www.taptap.cn/app/779458",
+    linkLabel: "TapTap"
   },
   {
     title: "关于我加班猝死灵魂附身在自动贩卖机这件事",
@@ -102,6 +107,11 @@ function renderCard(entry: GameJamEntry): string {
       </div>`
     : "";
   const repoEmpty = entry.repo ? "" : `<div class="gamejam-repo gamejam-repo--empty">Repo 未发布</div>`;
+  const external = entry.link
+    ? `<div class="gamejam-link">
+        <a class="ghost-button" href="${entry.link}" target="_blank" rel="noreferrer">${escapeHtml(entry.linkLabel ?? "外部链接")}</a>
+      </div>`
+    : "";
   return `
     <article class="gamejam-card">
       <div class="gamejam-card__head">
@@ -116,6 +126,7 @@ function renderCard(entry: GameJamEntry): string {
         <p class="card-copy">${escapeHtml(entry.description)}</p>
       </div>
       ${repo || repoEmpty}
+      ${external}
     </article>
   `;
 }

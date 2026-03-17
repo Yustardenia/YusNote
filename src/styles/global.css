@@ -1592,6 +1592,11 @@ textarea:focus {
   border-style: dashed;
 }
 
+.gamejam-link {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .workspace-topbar {
   display: flex;
   align-items: center;
