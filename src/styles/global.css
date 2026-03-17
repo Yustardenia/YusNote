@@ -1525,6 +1525,73 @@ textarea:focus {
   gap: 22px;
 }
 
+.gamejam-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.gamejam-card {
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+}
+
+.gamejam-card__head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gamejam-date {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.gamejam-card__body {
+  display: grid;
+  gap: 10px;
+}
+
+.gamejam-repo {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.gamejam-repo img {
+  width: 100%;
+  display: block;
+}
+
+.gamejam-repo__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+}
+
+.gamejam-repo__actions span {
+  color: var(--text-soft);
+}
+
+.gamejam-repo--empty {
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  border-style: dashed;
+}
+
 .workspace-topbar {
   display: flex;
   align-items: center;
@@ -1819,6 +1886,10 @@ textarea:focus {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .gamejam-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .creative-workspace {
     grid-template-columns: 280px minmax(0, 1fr);
   }
@@ -1832,6 +1903,10 @@ textarea:focus {
   .showcase-search,
   .creative-editor-grid,
   .creative-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .gamejam-grid {
     grid-template-columns: 1fr;
   }
 

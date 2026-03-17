@@ -18,6 +18,7 @@ export default defineConfig({
         keyword: resolve(__dirname, "tools/keyword.html"),
         divination: resolve(__dirname, "tools/divination.html"),
         game: resolve(__dirname, "tools/game.html"),
+        gamejam: resolve(__dirname, "tools/gamejam.html"),
         notFound: resolve(__dirname, "404.html")
       }
     }

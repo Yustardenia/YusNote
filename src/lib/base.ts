@@ -23,6 +23,7 @@ const pageTitles: { pattern: RegExp; title: string }[] = [
   { pattern: /tools\/keyword\.html$/i, title: "关键词卡 | YusNote" },
   { pattern: /tools\/divination\.html$/i, title: "占卜 | YusNote" },
   { pattern: /tools\/game\.html$/i, title: "Cyber Dash | YusNote" },
+  { pattern: /tools\/gamejam\.html$/i, title: "GameJam Works | YusNote" },
   { pattern: /(?:\/|\/index\.html)$/i, title: "YusNote | Moonlit Window" }
 ];
 

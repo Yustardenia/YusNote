@@ -46,7 +46,8 @@ export const homeSidebarLinks: HomeSidebarLink[] = [
   { href: "./tools/todo.html", label: "Todo", iconId: "bookmark" },
   { href: "./tools/schedule.html", label: "日程", iconId: "calendar" },
   { href: "./tools/focus.html", label: "专注", iconId: "clock" },
-  { href: "./tools/creative.html", label: "Creative", iconId: "brush" }
+  { href: "./tools/creative.html", label: "Creative", iconId: "brush" },
+  { href: "./tools/gamejam.html", label: "GameJam", iconId: "controller" }
 ];
 
 export const homeShowcase: HomeShowcase = {
@@ -63,7 +64,8 @@ export const toolCards: ToolCard[] = [
   { href: "./tools/rename.html", title: "重命名", iconId: "rename" },
   { href: "./tools/keyword.html", title: "关键词", iconId: "keyword" },
   { href: "./tools/divination.html", title: "占卜", iconId: "divination" },
-  { href: "./tools/game.html", title: "游戏", iconId: "game" }
+  { href: "./tools/game.html", title: "游戏", iconId: "game" },
+  { href: "./tools/gamejam.html", title: "GameJam", iconId: "controller" }
 ];
 
 export const searchEngines: SearchEngineOption[] = [
