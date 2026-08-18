@@ -21,16 +21,6 @@ interface GameJamEntry {
 
 const entries: GameJamEntry[] = [
   {
-    title: "幻想朋友",
-    jamName: "BOOOMJam游戏创作挑战2026",
-    date: "2026-04-24",
-    genre: "解谜",
-    theme: "幻想朋友",
-    description:
-      "每晚关灯后，黑暗中总藏着看不见的怪物。操控孩子在漆黑房间里移动、拾取物品：睁眼只能看见模糊的现实轮廓，闭眼则进入里世界，发现隐藏的光源与传送点。利用同色光源传送，关闭或遮挡所有发光物；房间越暗，幻想朋友越强，但黑暗也会让孩子逐渐被里世界同化。信任朋友，还是相信自己？每一条路都通往不同的夜晚。",
-    cover: "/assets/gamejam/fantasy-friends.png"
-  },
-  {
     title: "黑白冲刺",
     jamName: "土豆丝招新GJ",
     date: "2025-02-07",
@@ -107,6 +97,16 @@ const entries: GameJamEntry[] = [
       "三人联机卡牌对局，混合 Dot 点数牌与 Effect 效果牌；通过打空手牌或触发胜利条件取胜，回合与全局事件均带随机性。",
     repo: { owner: "Yustardenia", name: "MengYaGameJam2026-DOTS" },
     cover: "/assets/gamejam/DOTS.png"
+  },
+  {
+    title: "幻想朋友",
+    jamName: "BOOOMJam游戏创作挑战2026",
+    date: "2026-04-24",
+    genre: "解谜",
+    theme: "幻想朋友",
+    description:
+      "每晚关灯后，黑暗中总藏着看不见的怪物。操控孩子在漆黑房间里移动、拾取物品：睁眼只能看见模糊的现实轮廓，闭眼则进入里世界，发现隐藏的光源与传送点。利用同色光源传送，关闭或遮挡所有发光物；房间越暗，幻想朋友越强，但黑暗也会让孩子逐渐被里世界同化。信任朋友，还是相信自己？每一条路都通往不同的夜晚。",
+    cover: "/assets/gamejam/fantasy-friends.png"
   }
 ];
 
